@@ -99,7 +99,7 @@ export default function HoChiMinh() {
                 key={card.id}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, info) => {
+                onDragEnd={(_e, info) => {
                   if (info.offset.x > 50 && active > 0) {
                     setActive(active - 1);
                   } else if (info.offset.x < -50 && active < cards.length - 1) {

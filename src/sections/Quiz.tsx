@@ -1,5 +1,5 @@
 // src/sections/Quiz.tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Card,
