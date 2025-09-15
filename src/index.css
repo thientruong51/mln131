@@ -1,0 +1,22 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #070606 0%, #1a0707 40%, #2a0b0b 100%);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* scroll behavior smooth */
+html {
+  scroll-behavior: smooth;
+}
+
+/* remove iframe border if any */
+iframe { border: 0; }
