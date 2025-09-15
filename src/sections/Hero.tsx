@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import tuyengon from "../assets/tuyengon.png";
+import backgroundVideo from "../assets/videoplayback (4).mp4";
 
 export default function Hero() {
   const [openIntro, setOpenIntro] = useState(false);
@@ -31,7 +32,7 @@ export default function Hero() {
       }}
     >
       {/* Video background */}
-      <video
+       <video
         autoPlay
         loop
         muted
@@ -46,7 +47,7 @@ export default function Hero() {
           zIndex: 0,
         }}
       >
-        <source src="/src/assets/videoplayback.mp4" type="video/mp4" />
+        <source src={backgroundVideo} type="video/mp4" />
       </video>
 
       <Box
