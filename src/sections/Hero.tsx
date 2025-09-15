@@ -49,7 +49,6 @@ export default function Hero() {
         <source src="/src/assets/videoplayback.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay đỏ */}
       <Box
         sx={{
           position: "absolute",
