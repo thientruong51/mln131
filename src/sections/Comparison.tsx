@@ -66,7 +66,7 @@ export default function Comparison() {
         "Kết hợp độc lập dân tộc với chủ nghĩa xã hội; đặt quyền lợi, tự do, hạnh phúc của nhân dân làm mục tiêu.",
       path:
         "Tổ chức và liên kết phong trào cách mạng quần chúng, thành lập Đảng (1930), thành lập Việt Minh (1941), lãnh đạo Tổng khởi nghĩa (1945).",
-      limitations: "Không có",
+      limitations: "Không",
       contribution:
         "Con đường lựa chọn gắn với bối cảnh thế giới và ý thức hệ thời đại; Đem lại độc lập thực sự, gắn độc lập dân tộc với lợi ích xã hội của nhân dân; đặt nền móng cho xây dựng nhà nước mới.",
       years: "Hoạt động nổi bật: 1919–1969",

@@ -8,7 +8,6 @@ import {
   Button,
   LinearProgress,
   Stack,
-  IconButton,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
@@ -36,11 +35,11 @@ const questions: QA[] = [
   {
     q: "Phan Châu Trinh khác Hồ Chí Minh ở điểm nào trong cách tiếp cận vấn đề độc lập dân tộc?",
     opts: [
-      "Phan Châu Trinh chủ trương cải cách, dựa vào Pháp, còn Hồ Chí Minh chủ trương cách mạng giải phóng dân tộc bằng sức mạnh toàn dân",
       "Phan Châu Trinh thiên về bạo động, dựa vào Nhật Bản, còn Hồ Chí Minh thiên về cải cách văn hóa dựa vào trí thức",
+      "Phan Châu Trinh chủ trương cải cách, dựa vào Pháp, còn Hồ Chí Minh chủ trương cách mạng giải phóng dân tộc bằng sức mạnh toàn dân",
       "Phan Châu Trinh chủ trương khai dân trí, chấn dân khí, hậu dân sinh, còn Hồ Chí Minh chỉ dừng lại ở mục tiêu độc lập chính trị"
     ],
-    a: 0,
+    a: 1,
     explanation: "Phan Châu Trinh đi theo hướng cải cách, dựa vào Pháp, trong khi Hồ Chí Minh chủ trương cách mạng giải phóng bằng lực lượng toàn dân."
   },
   {
@@ -56,31 +55,33 @@ const questions: QA[] = [
   {
     q: "Câu nói 'Không có gì quý hơn độc lập, tự do' thể hiện tư tưởng gì của Hồ Chí Minh?",
     opts: [
-      "Khẳng định giá trị tối cao của độc lập dân tộc gắn với tự do, sẵn sàng hy sinh để bảo vệ Tổ quốc",
       "Khẳng định độc lập dân tộc chỉ cần thiết khi có sự bảo trợ từ quốc tế, nhờ đó mới duy trì tự do",
-      "Khẳng định cần ưu tiên cải cách xã hội và nâng cao dân trí, rồi sau đó mới nghĩ đến vấn đề độc lập dân tộc"
+      "Khẳng định cần ưu tiên cải cách xã hội và nâng cao dân trí, rồi sau đó mới nghĩ đến vấn đề độc lập dân tộc",
+      "Khẳng định giá trị tối cao của độc lập dân tộc gắn với tự do, sẵn sàng hy sinh để bảo vệ Tổ quốc",
+
     ],
-    a: 0,
+    a: 2,
     explanation: "Câu nói khẳng định độc lập gắn với tự do là giá trị thiêng liêng nhất, không thể thay thế bằng cải cách đơn thuần hay sự bảo hộ quốc tế."
   },
   {
     q: "Phong trào Đông Du của Phan Bội Châu thất bại chủ yếu vì lý do nào?",
     opts: [
-      "Nhật Bản thỏa hiệp với Pháp và trục xuất lưu học sinh, phong trào thiếu cơ sở trong nước nên nhanh chóng tan rã",
       "Nhân dân Việt Nam lúc đó chưa có khát vọng độc lập nên không ủng hộ phong trào, dẫn đến thất bại",
+      "Nhật Bản thỏa hiệp với Pháp và trục xuất lưu học sinh, phong trào thiếu cơ sở trong nước nên nhanh chóng tan rã",
       "Phan Châu Trinh và các trí thức cải cách đã công khai phản đối nên phong trào mất uy tín và suy yếu"
     ],
-    a: 0,
+    a: 1,
     explanation: "Phong trào thất bại vì dựa vào Nhật, khi Nhật trục xuất lưu học sinh thì mất chỗ dựa, trong nước chưa có cơ sở vững chắc."
   },
   {
     q: "Hồ Chí Minh đã kết hợp sức mạnh dân tộc với yếu tố nào để giành độc lập?",
     opts: [
-      "Kết hợp sức mạnh dân tộc với phong trào cách mạng thế giới, tạo sự cộng hưởng giữa dân tộc và thời đại",
       "Kết hợp sức mạnh dân tộc với sự bảo hộ của các nước đế quốc, nhằm tránh bị cô lập về chính trị",
-      "Kết hợp sức mạnh dân tộc với cải cách kinh tế - xã hội theo mô hình phương Tây, lấy phát triển làm nền tảng"
+      "Kết hợp sức mạnh dân tộc với cải cách kinh tế - xã hội theo mô hình phương Tây, lấy phát triển làm nền tảng",
+      "Kết hợp sức mạnh dân tộc với phong trào cách mạng thế giới, tạo sự cộng hưởng giữa dân tộc và thời đại",
+
     ],
-    a: 0,
+    a: 2,
     explanation: "Hồ Chí Minh gắn cách mạng Việt Nam với phong trào cách mạng thế giới, chứ không phụ thuộc vào bảo hộ hay chỉ cải cách nội bộ."
   },
   {
@@ -96,11 +97,11 @@ const questions: QA[] = [
   {
     q: "Khác với các tiền nhân, Hồ Chí Minh gắn độc lập dân tộc với mục tiêu nào?",
     opts: [
-      "Gắn độc lập dân tộc với chủ nghĩa xã hội, coi đây là con đường bảo đảm hạnh phúc, công bằng, dân chủ",
       "Gắn độc lập dân tộc với việc phục hồi chế độ quân chủ, xem đó là nền tảng giữ gìn bản sắc dân tộc",
+      "Gắn độc lập dân tộc với chủ nghĩa xã hội, coi đây là con đường bảo đảm hạnh phúc, công bằng, dân chủ",
       "Gắn độc lập dân tộc với việc canh tân theo mô hình tư sản, xây dựng xã hội theo kiểu phương Tây"
     ],
-    a: 0,
+    a: 1,
     explanation: "Hồ Chí Minh khẳng định độc lập dân tộc phải gắn với chủ nghĩa xã hội, không dừng lại ở khôi phục quân chủ hay tư sản hóa."
   },
   {
@@ -116,11 +117,11 @@ const questions: QA[] = [
   {
     q: "Điểm chung giữa các tiền nhân và Hồ Chí Minh trong tư tưởng độc lập dân tộc là gì?",
     opts: [
-      "Đều đặt khát vọng độc lập dân tộc lên hàng đầu, dù con đường thực hiện có sự khác nhau",
       "Đều dựa vào sự giúp đỡ trực tiếp của ngoại bang để giành độc lập và phát triển đất nước",
-      "Đều coi cải cách xã hội là điều kiện tiên quyết, sau đó mới đặt vấn đề độc lập dân tộc"
+      "Đều coi cải cách xã hội là điều kiện tiên quyết, sau đó mới đặt vấn đề độc lập dân tộc",
+      "Đều đặt khát vọng độc lập dân tộc lên hàng đầu, dù con đường thực hiện có sự khác nhau",
     ],
-    a: 0,
+    a: 2,
     explanation: "Điểm chung là khát vọng độc lập dân tộc, khác nhau ở chỗ con đường: Hồ Chí Minh tự lực, tiền nhân phụ thuộc ngoại bang hoặc cải cách."
   }
 
@@ -144,13 +145,12 @@ export default function Quiz() {
     setSelected(optIndex);
 
     if (optIndex === q.a) {
-      // đúng
       setAnswers((prev) => {
         const copy = [...prev];
         copy[idx] = optIndex;
         return copy;
       });
-      setScore((s) => (answers[idx] === null ? s + 1 : s)); // chỉ cộng lần đầu
+      setScore((s) => (answers[idx] === null ? s + 1 : s));
       setShowExplanation(true);
     }
   };
@@ -300,9 +300,22 @@ export default function Quiz() {
           </CardContent>
         </Card>
       ) : (
-        // giữ nguyên phần kết quả
-        <Box sx={{ maxWidth: 820, mx: "auto" }}>
-          {/* ... */}
+        // Phần kết quả
+        <Box sx={{ maxWidth: 820, mx: "auto", textAlign: "center" }}>
+          <Typography variant="h5" sx={{ mb: 2 }}>
+            Bạn đã hoàn thành quiz!
+          </Typography>
+          <Typography variant="h6" sx={{ mb: 3 }}>
+            Điểm của bạn: {score} / {questions.length}
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={<ReplayIcon />}
+            onClick={retry}
+            sx={{ bgcolor: "#eeb72b", color: "#8b1f20" }}
+          >
+            Thử lại
+          </Button>
         </Box>
       )}
     </Box>
