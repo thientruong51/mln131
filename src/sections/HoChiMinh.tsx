@@ -7,7 +7,7 @@ import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
 import img3 from "../assets/3.jpg";
 import img4 from "../assets/4.jpg";
-
+import bgImg from "../assets/sosanh.png";
 const cards = [
   {
     id: 0,
@@ -53,13 +53,18 @@ export default function HoChiMinh() {
 
   return (
     <Box
-      sx={{
-        minHeight: "100vh",
-        py: { xs: 6, md: 8 },
-        px: { xs: 2, md: 8 },
-        background: "linear-gradient(to bottom, #1a0000, #330000)",
-      }}
-    >
+  sx={{
+    minHeight: "100vh",
+    py: { xs: 6, md: 8 },
+    px: { xs: 2, md: 8 },
+    backgroundImage: `url(${bgImg})`,
+    backgroundSize: "cover",       // ảnh phủ toàn màn
+    backgroundPosition: "center",  // căn giữa
+    backgroundRepeat: "no-repeat", // không lặp
+    backgroundColor: "rgba(0,0,0,0.6)",
+backgroundBlendMode: "darken",
+  }}
+>
       {/* Tiêu đề */}
       <Typography
         variant={isMobile ? "h4" : "h3"}
@@ -114,6 +119,10 @@ export default function HoChiMinh() {
                   zIndex: isActive ? 10 : 1,
                 }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                whileHover={{
+                  rotate: [0, -3, 3, -3, 3, 0], // 👈 lắc trái phải
+                  transition: { duration: 0.5 }, // thời gian rung
+                }}
                 style={{
                   position: "absolute",
                   left: "50%",
@@ -162,6 +171,7 @@ export default function HoChiMinh() {
                   </Box>
                 </Box>
               </motion.div>
+
             );
           })}
         </Box>

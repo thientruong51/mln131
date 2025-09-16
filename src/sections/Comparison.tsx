@@ -19,6 +19,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import HistoryIcon from "@mui/icons-material/History";
 import StarIcon from "@mui/icons-material/Star";
 import { motion } from "framer-motion";
+import { Tooltip } from "@mui/material";
 
 import hcmPortrait from "../assets/HCM.jpg";
 import pbcPortrait from "../assets/PhanBoiChau.png";
@@ -73,7 +74,7 @@ export default function Comparison() {
   ];
 
   return (
-    <Box sx={{ py: 8, px: { xs: 2, md: 8 }, color: "#fff" }}>
+    <Box sx={{ py: 8, px: { xs: 2, md: 8, }, color: "#fff",minHeight: "100vh", }}>
       <Typography variant="h4" sx={{ color: "#eeb72b", mb: 1 }}>
         So sánh – Kế thừa & Sáng tạo
       </Typography>
@@ -108,11 +109,11 @@ export default function Comparison() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: { xs: 2, md: 45 },
+            gap: { xs: 2, md: 50 },
             flexWrap: "wrap",
           }}
         >
-          {/* Left: PBC & PCT chồng lên nhau */}
+          {/* Left: PBC & PCT */}
           <Box
             sx={{
               width: { xs: "100%", sm: 260, md: 320 },
@@ -120,11 +121,13 @@ export default function Comparison() {
               height: { xs: 360, sm: 400, md: 460 },
             }}
           >
+            {/* PBC */}
             <MotionBox
-              animate={{ x: -15, rotate: -6 }}
-              transition={{ type: "spring", stiffness: 160, damping: 18 }}
-              sx={{ position: "absolute", top: 40, left: 0, zIndex: 1 }}
+              animate={{ rotate: [-6, -10, -6] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              sx={{ position: "absolute", top: 0, left: -100, zIndex: 1 }}
             >
+              <Tooltip title="Phan Bội Châu" arrow>
               <Card
                 sx={{
                   width: { xs: 220, sm: 260, md: 320 },
@@ -140,12 +143,16 @@ export default function Comparison() {
                   sx={{ height: { xs: 320, sm: 380, md: 460 } }}
                 />
               </Card>
+              </Tooltip>
             </MotionBox>
+
+            {/* PCT */}
             <MotionBox
-              animate={{ x: 25, rotate: 6 }}
-              transition={{ type: "spring", stiffness: 160, damping: 18 }}
-              sx={{ position: "absolute", top: 0, left: 30, zIndex: 2 }}
+              animate={{ rotate: [6, 10, 6] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+              sx={{ position: "absolute", top: 0, left: 60, zIndex: 2 }}
             >
+              <Tooltip title="Phan Châu Trinh" arrow>
               <Card
                 sx={{
                   width: { xs: 220, sm: 260, md: 320 },
@@ -161,6 +168,7 @@ export default function Comparison() {
                   sx={{ height: { xs: 320, sm: 380, md: 460 } }}
                 />
               </Card>
+              </Tooltip>
             </MotionBox>
           </Box>
 
@@ -172,22 +180,30 @@ export default function Comparison() {
               justifyContent: "center",
             }}
           >
-            <Card
-              sx={{
-                width: { xs: 220, sm: 260, md: 360 },
-                borderRadius: 2,
-                overflow: "hidden",
-                border: "2px solid #eeb72b",
-                boxShadow: 10,
-              }}
+            <MotionBox
+              animate={{ rotate: [-2, 2, -2] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              sx={{ zIndex: 3 }}
             >
-              <CardMedia
-                component="img"
-                image={hcmPortrait}
-                alt="Hồ Chí Minh"
-                sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-              />
-            </Card>
+              <Tooltip title="Hồ Chí Minh" arrow>
+              <Card
+                sx={{
+                  width: { xs: 220, sm: 260, md: 360 },
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  border: "2px solid #eeb72b",
+                  boxShadow: 10,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={hcmPortrait}
+                  alt="Hồ Chí Minh"
+                  sx={{ height: { xs: 320, sm: 380, md: 460 } }}
+                />
+              </Card>
+              </Tooltip>
+            </MotionBox>
           </Box>
         </Box>
       ) : (
@@ -248,7 +264,9 @@ export default function Comparison() {
                       <ListItemText
                         primary="Con đường:"
                         secondary={ld.path}
-                        secondaryTypographyProps={{ fontSize: { xs: 12, sm: 13 } }}
+                        secondaryTypographyProps={{
+                          fontSize: { xs: 12, sm: 13 },
+                        }}
                       />
                     </ListItem>
                     <ListItem>
@@ -258,17 +276,24 @@ export default function Comparison() {
                       <ListItemText
                         primary="Hạn chế:"
                         secondary={ld.limitations}
-                        secondaryTypographyProps={{ fontSize: { xs: 12, sm: 13 } }}
+                        secondaryTypographyProps={{
+                          fontSize: { xs: 12, sm: 13 },
+                        }}
                       />
                     </ListItem>
                     <ListItem>
                       <ListItemIcon sx={{ minWidth: 30 }}>
-                        <CheckCircleIcon sx={{ color: "#9be15d" }} fontSize="small" />
+                        <CheckCircleIcon
+                          sx={{ color: "#9be15d" }}
+                          fontSize="small"
+                        />
                       </ListItemIcon>
                       <ListItemText
                         primary="Đóng góp:"
                         secondary={ld.contribution}
-                        secondaryTypographyProps={{ fontSize: { xs: 12, sm: 13 } }}
+                        secondaryTypographyProps={{
+                          fontSize: { xs: 12, sm: 13 },
+                        }}
                       />
                     </ListItem>
                     <ListItem>
@@ -278,7 +303,9 @@ export default function Comparison() {
                       <ListItemText
                         primary="Thời kỳ:"
                         secondary={ld.years}
-                        secondaryTypographyProps={{ fontSize: { xs: 12, sm: 13 } }}
+                        secondaryTypographyProps={{
+                          fontSize: { xs: 12, sm: 13 },
+                        }}
                       />
                     </ListItem>
                   </List>
