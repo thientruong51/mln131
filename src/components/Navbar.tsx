@@ -31,12 +31,22 @@ const MENU = [
   { id: "comparison", label: "So sánh" },
   { id: "values", label: "Giá trị" },
   { id: "quiz", label: "Quiz" },
+  { id: "qa", label: "Q&A", link: "https://padlet.com/tuancan297/q-a-xvdvitfdi6zzs5rp" }, // thêm Q&A
 ];
 
 export default function Navbar({ onNavigate, active }: NavbarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
+
+  // hàm xử lý chung khi click menu
+  const handleClick = (m: typeof MENU[number]) => {
+    if (m.link) {
+      window.open(m.link, "_blank"); // mở tab mới
+    } else {
+      onNavigate(m.id);
+    }
+  };
 
   return (
     <AppBar
@@ -60,13 +70,16 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
             {MENU.map((m) => (
               <Button
                 key={m.id}
-                onClick={() => onNavigate(m.id)}
+                onClick={() => handleClick(m)}
                 sx={{
-                  color: active === m.id ? "#eeb72b" : "rgba(255,255,255,0.8)",
+                  color:
+                    active === m.id ? "#eeb72b" : "rgba(255,255,255,0.8)",
                   textTransform: "none",
                   fontWeight: active === m.id ? 700 : 500,
                   borderBottom:
-                    active === m.id ? "2px solid #eeb72b" : "2px solid transparent",
+                    active === m.id
+                      ? "2px solid #eeb72b"
+                      : "2px solid transparent",
                   borderRadius: 0,
                   "&:hover": { color: "#eeb72b" },
                 }}
@@ -113,7 +126,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
                   <ListItem key={m.id} disablePadding>
                     <ListItemButton
                       onClick={() => {
-                        onNavigate(m.id);
+                        handleClick(m);
                         setOpen(false);
                       }}
                       selected={active === m.id}
