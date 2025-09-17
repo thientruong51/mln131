@@ -72,7 +72,7 @@ export default function Hero() {
           sx={{
             position: "absolute",
             bottom: { xs: "15%", md: "20%" },
-            right: { xs: "5%", md: "8%" },
+            right: { xs: "5%", md: "5%" },
             width: { xs: "220px", md: "350px" },
             border: "4px solid #eeb72b",
             borderRadius: "8px",
@@ -91,7 +91,7 @@ export default function Hero() {
           position: "relative",
           zIndex: 3,
           textAlign: "left",
-          maxWidth: 900,
+          maxWidth: 950,
           px: 1,
         }}
       >

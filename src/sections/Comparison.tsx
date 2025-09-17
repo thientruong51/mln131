@@ -12,6 +12,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Tooltip,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,11 +20,11 @@ import PublicIcon from "@mui/icons-material/Public";
 import HistoryIcon from "@mui/icons-material/History";
 import StarIcon from "@mui/icons-material/Star";
 import { motion } from "framer-motion";
-import { Tooltip } from "@mui/material";
 
 import hcmPortrait from "../assets/HCM.jpg";
 import pbcPortrait from "../assets/PhanBoiChau.png";
 import pctPortrait from "../assets/PhanChauTrinh.jpg";
+import sosanhBg from "../assets/sosanhbg.png";
 
 const MotionBox = motion(Box) as any;
 
@@ -74,254 +75,314 @@ export default function Comparison() {
   ];
 
   return (
-    <Box sx={{ py: 8, px: { xs: 2, md: 8, }, color: "#fff",minHeight: "100vh", }}>
-      <Typography variant="h4" sx={{ color: "#eeb72b", mb: 1 }}>
-        So sánh – Kế thừa & Sáng tạo
-      </Typography>
+    <Box
+      sx={{
+        position: "relative",
+        py: 8,
+        px: { xs: 2, md: 8 },
+        color: "#fff",
+        minHeight: "100vh",
+        backgroundImage: `url(${sosanhBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        overflow: "hidden",
+      }}
+    >
+      {/* Overlay gradient + slight blur (nằm dưới nội dung) */}
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 70%)",
+          backdropFilter: "blur(2px)",
+          zIndex: 0,
+        }}
+      />
 
-      <Typography sx={{ mb: 3 }}>
-        “Hồ Chí Minh đã kế thừa tinh thần yêu nước của tiền nhân, đồng thời sáng
-        tạo một con đường mới phù hợp với thời đại.”
-      </Typography>
-
-      {/* Nút toggle */}
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
-        <Button
-          variant="contained"
-          onClick={() => setShow((s) => !s)}
+      {/* Nội dung chính (zIndex cao hơn overlay) */}
+      <Box sx={{ position: "relative", zIndex: 1 }}>
+        <Typography
+          variant="h4"
           sx={{
-            bgcolor: "#eeb72b",
-            color: "#8b1f20",
-            fontWeight: 700,
-            borderRadius: "999px",
-            px: 4,
-            py: 1.2,
+            color: "#eeb72b",
+            mb: 1,
+            textShadow: "0px 3px 8px rgba(0,0,0,0.85)",
+            fontWeight: 800,
           }}
         >
-          {show ? "Ẩn so sánh" : "So sánh"}
-        </Button>
-      </Box>
+          So sánh – Kế thừa & Sáng tạo
+        </Typography>
 
-      {!show ? (
-        // --- Trước khi so sánh ---
-        <Box
+        <Typography
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: { xs: 2, md: 50 },
-            flexWrap: "wrap",
+            mb: 3,
+            textShadow: "0px 2px 6px rgba(0,0,0,0.75)",
+            color: "rgba(255,255,255,0.92)",
           }}
         >
-          {/* Left: PBC & PCT */}
-          <Box
+          “Hồ Chí Minh đã kế thừa tinh thần yêu nước của tiền nhân, đồng thời sáng
+          tạo một con đường mới phù hợp với thời đại.”
+        </Typography>
+
+        {/* Nút toggle */}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
+          <Button
+            variant="contained"
+            onClick={() => setShow((s) => !s)}
             sx={{
-              width: { xs: "100%", sm: 260, md: 320 },
-              position: "relative",
-              height: { xs: 360, sm: 400, md: 460 },
+              bgcolor: "#eeb72b",
+              color: "#8b1f20",
+              fontWeight: 700,
+              borderRadius: "999px",
+              px: 4,
+              py: 1.2,
+              boxShadow: "0px 6px 18px rgba(0,0,0,0.35)",
             }}
           >
-            {/* PBC */}
-            <MotionBox
-              animate={{ rotate: [-6, -10, -6] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              sx={{ position: "absolute", top: 0, left: -100, zIndex: 1 }}
-            >
-              <Tooltip title="Phan Bội Châu" arrow>
-              <Card
-                sx={{
-                  width: { xs: 220, sm: 260, md: 320 },
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  boxShadow: 8,
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={pbcPortrait}
-                  alt="Phan Bội Châu"
-                  sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-                />
-              </Card>
-              </Tooltip>
-            </MotionBox>
+            {show ? "Ẩn so sánh" : "So sánh"}
+          </Button>
+        </Box>
 
-            {/* PCT */}
-            <MotionBox
-              animate={{ rotate: [6, 10, 6] }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-              sx={{ position: "absolute", top: 0, left: 60, zIndex: 2 }}
-            >
-              <Tooltip title="Phan Châu Trinh" arrow>
-              <Card
-                sx={{
-                  width: { xs: 220, sm: 260, md: 320 },
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  boxShadow: 10,
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={pctPortrait}
-                  alt="Phan Châu Trinh"
-                  sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-                />
-              </Card>
-              </Tooltip>
-            </MotionBox>
-          </Box>
-
-          {/* Right: HCM */}
+        {!show ? (
+          // --- Trước khi so sánh: 2 ảnh chồng vs 1 ảnh bên phải ---
           <Box
             sx={{
-              width: { xs: "100%", sm: 260, md: 320 },
               display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: { xs: 2, md: 50 },
+              flexWrap: "wrap",
+            }}
+          >
+            {/* Left: PBC & PCT stacked */}
+            <Box
+              sx={{
+                width: { xs: "100%", sm: 260, md: 320 },
+                position: "relative",
+                height: { xs: 360, sm: 400, md: 460 },
+              }}
+            >
+              {/* PBC (behind) */}
+              <MotionBox
+                animate={{ rotate: [-6, -10, -6] }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: -100,
+                  zIndex: 1,
+                }}
+              >
+                <Tooltip title="Phan Bội Châu" arrow>
+                  <Card
+                    sx={{
+                      width: { xs: 220, sm: 260, md: 320 },
+                      borderRadius: 2,
+                      overflow: "hidden",
+                      boxShadow: 8,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={pbcPortrait}
+                      alt="Phan Bội Châu"
+                      sx={{ height: { xs: 320, sm: 380, md: 460 } }}
+                    />
+                  </Card>
+                </Tooltip>
+              </MotionBox>
+
+              {/* PCT (front-left) */}
+              <MotionBox
+                animate={{ rotate: [6, 10, 6] }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                sx={{ position: "absolute", top: 0, left: 60, zIndex: 2 }}
+              >
+                <Tooltip title="Phan Châu Trinh" arrow>
+                  <Card
+                    sx={{
+                      width: { xs: 220, sm: 260, md: 320 },
+                      borderRadius: 2,
+                      overflow: "hidden",
+                      boxShadow: 10,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={pctPortrait}
+                      alt="Phan Châu Trinh"
+                      sx={{ height: { xs: 320, sm: 380, md: 460 } }}
+                    />
+                  </Card>
+                </Tooltip>
+              </MotionBox>
+            </Box>
+
+            {/* Right: HCM single portrait */}
+            <Box
+              sx={{
+                width: { xs: "100%", sm: 260, md: 320 },
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <MotionBox
+                animate={{ rotate: [-2, 2, -2] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                sx={{ zIndex: 3 }}
+              >
+                <Tooltip title="Hồ Chí Minh" arrow>
+                  <Card
+                    sx={{
+                      width: { xs: 220, sm: 260, md: 360 },
+                      borderRadius: 2,
+                      overflow: "hidden",
+                      border: "2px solid #eeb72b",
+                      boxShadow: 10,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={hcmPortrait}
+                      alt="Hồ Chí Minh"
+                      sx={{ height: { xs: 320, sm: 380, md: 460 } }}
+                    />
+                  </Card>
+                </Tooltip>
+              </MotionBox>
+            </Box>
+          </Box>
+        ) : (
+          // --- Sau khi bấm So sánh: show cards với thông tin ---
+          <Box
+            sx={{
+              display: "flex",
+              gap: 3,
+              flexWrap: "wrap",
               justifyContent: "center",
             }}
           >
-            <MotionBox
-              animate={{ rotate: [-2, 2, -2] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              sx={{ zIndex: 3 }}
-            >
-              <Tooltip title="Hồ Chí Minh" arrow>
-              <Card
-                sx={{
-                  width: { xs: 220, sm: 260, md: 360 },
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  border: "2px solid #eeb72b",
-                  boxShadow: 10,
-                }}
+            {leaders.map((ld, idx) => (
+              <MotionBox
+                key={ld.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.15 }}
               >
-                <CardMedia
-                  component="img"
-                  image={hcmPortrait}
-                  alt="Hồ Chí Minh"
-                  sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-                />
-              </Card>
-              </Tooltip>
-            </MotionBox>
-          </Box>
-        </Box>
-      ) : (
-        // --- Sau khi bấm So sánh ---
-        <Box
-          sx={{
-            display: "flex",
-            gap: 3,
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          {leaders.map((ld, idx) => (
-            <MotionBox
-              key={ld.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.15 }}
-            >
-              <Card
-                sx={{
-                  width: { xs: "100%", sm: 340, md: 420 },
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  border:
-                    ld.id === "hcm"
-                      ? "2px solid #eeb72b"
-                      : "1px solid rgba(255,255,255,0.06)",
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.6)",
-                  bgcolor: "rgba(0,0,0,0.55)",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={ld.img}
-                  alt={ld.name}
-                  sx={{ height: { xs: 300, sm: 420, md: 500 } }}
-                />
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    sx={{ color: "#eeb72b", fontWeight: 800 }}
-                  >
-                    {ld.name}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    sx={{ mb: 1, fontSize: { xs: 12, sm: 13 } }}
-                  >
-                    {ld.slogan}
-                  </Typography>
-                  <Divider sx={{ my: 1 }} />
-                  <List dense>
-                    <ListItem>
-                      <ListItemIcon sx={{ minWidth: 30 }}>
-                        <PublicIcon sx={{ color: "#eeb72b" }} fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Con đường:"
-                        secondary={ld.path}
-                        secondaryTypographyProps={{
-                          fontSize: { xs: 12, sm: 13 },
-                        }}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon sx={{ minWidth: 30 }}>
-                        <CloseIcon sx={{ color: "#ff6b6b" }} fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Hạn chế:"
-                        secondary={ld.limitations}
-                        secondaryTypographyProps={{
-                          fontSize: { xs: 12, sm: 13 },
-                        }}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon sx={{ minWidth: 30 }}>
-                        <CheckCircleIcon
-                          sx={{ color: "#9be15d" }}
-                          fontSize="small"
-                        />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Đóng góp:"
-                        secondary={ld.contribution}
-                        secondaryTypographyProps={{
-                          fontSize: { xs: 12, sm: 13 },
-                        }}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon sx={{ minWidth: 30 }}>
-                        <HistoryIcon sx={{ color: "#eeb72b" }} fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Thời kỳ:"
-                        secondary={ld.years}
-                        secondaryTypographyProps={{
-                          fontSize: { xs: 12, sm: 13 },
-                        }}
-                      />
-                    </ListItem>
-                  </List>
-                  <Divider sx={{ my: 1 }} />
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <StarIcon sx={{ color: "#eeb72b" }} />
-                    <Typography variant="caption">
-                      Kế thừa & sáng tạo
+                <Card
+                  sx={{
+                    width: { xs: "100%", sm: 340, md: 420 },
+                    borderRadius: 2,
+                    overflow: "hidden",
+                    border:
+                      ld.id === "hcm"
+                        ? "2px solid #eeb72b"
+                        : "1px solid rgba(255,255,255,0.06)",
+                    boxShadow: "0 12px 30px rgba(0,0,0,0.6)",
+                    bgcolor: "rgba(0,0,0,0.55)",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={ld.img}
+                    alt={ld.name}
+                    sx={{ height: { xs: 300, sm: 420, md: 500 } }}
+                  />
+                  <CardContent>
+                    <Typography
+                      variant="h6"
+                      sx={{ color: "#eeb72b", fontWeight: 800 }}
+                    >
+                      {ld.name}
                     </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
-            </MotionBox>
-          ))}
-        </Box>
-      )}
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ mb: 1, fontSize: { xs: 12, sm: 13 } }}
+                    >
+                      {ld.slogan}
+                    </Typography>
+                    <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.06)" }} />
+                    <List dense>
+                      <ListItem>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <PublicIcon sx={{ color: "#eeb72b" }} fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Con đường:"
+                          secondary={ld.path}
+                          secondaryTypographyProps={{
+                            fontSize: { xs: 12, sm: 13 },
+                          }}
+                        />
+                      </ListItem>
+
+                      <ListItem>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <CloseIcon sx={{ color: "#ff6b6b" }} fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Hạn chế:"
+                          secondary={ld.limitations}
+                          secondaryTypographyProps={{
+                            fontSize: { xs: 12, sm: 13 },
+                          }}
+                        />
+                      </ListItem>
+
+                      <ListItem>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <CheckCircleIcon sx={{ color: "#9be15d" }} fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Đóng góp:"
+                          secondary={ld.contribution}
+                          secondaryTypographyProps={{
+                            fontSize: { xs: 12, sm: 13 },
+                          }}
+                        />
+                      </ListItem>
+
+                      <ListItem>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <HistoryIcon sx={{ color: "#eeb72b" }} fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Thời kỳ:"
+                          secondary={ld.years}
+                          secondaryTypographyProps={{
+                            fontSize: { xs: 12, sm: 13 },
+                          }}
+                        />
+                      </ListItem>
+                    </List>
+
+                    <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.06)" }} />
+
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <StarIcon sx={{ color: "#eeb72b" }} />
+                      <Typography variant="caption">Kế thừa & sáng tạo</Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </MotionBox>
+            ))}
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 }

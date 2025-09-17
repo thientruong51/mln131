@@ -1,6 +1,7 @@
 // App.tsx
 import { useRef, useState, useEffect } from "react";
 import { Box } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./sections/Hero";
 import PhanBoiChau from "./sections/PhanBoiChau";
@@ -10,14 +11,15 @@ import Comparison from "./sections/Comparison";
 import Values from "./sections/Values";
 import Quiz from "./sections/Quiz";
 import HoChiMinhInfor from "./sections/HoChiMinhinfor";
+import TransparencyAI from "./sections/TransparencyAI";
 
-function App() {
+function HomePage() {
   // refs
   const homeRef = useRef<HTMLDivElement | null>(null);
   const pbcRef = useRef<HTMLDivElement | null>(null);
   const pctRef = useRef<HTMLDivElement | null>(null);
   const hcmRef = useRef<HTMLDivElement | null>(null);
-  const hcmInforRef = useRef<HTMLDivElement | null>(null); // ✅ thêm ref
+  const hcmInforRef = useRef<HTMLDivElement | null>(null);
   const comparisonRef = useRef<HTMLDivElement | null>(null);
   const valuesRef = useRef<HTMLDivElement | null>(null);
   const quizRef = useRef<HTMLDivElement | null>(null);
@@ -28,8 +30,8 @@ function App() {
     { id: "home", ref: homeRef },
     { id: "pbc", ref: pbcRef },
     { id: "pct", ref: pctRef },
+    { id: "hcmInfor", ref: hcmInforRef },
     { id: "hcm", ref: hcmRef },
-    { id: "hcmInfor", ref: hcmInforRef }, 
     { id: "comparison", ref: comparisonRef },
     { id: "values", ref: valuesRef },
     { id: "quiz", ref: quizRef },
@@ -69,16 +71,26 @@ function App() {
           if (target) handleScrollTo(target.ref);
         }}
       />
-
       <Box ref={homeRef} data-section="home"><Hero /></Box>
       <Box ref={pbcRef} data-section="pbc"><PhanBoiChau /></Box>
       <Box ref={pctRef} data-section="pct"><PhanChauTrinh /></Box>
-      <Box ref={hcmInforRef} data-section="hcmInfor"><HoChiMinhInfor /></Box> 
+      <Box ref={hcmInforRef} data-section="hcmInfor"><HoChiMinhInfor /></Box>
       <Box ref={hcmRef} data-section="hcm"><HoChiMinh /></Box>
       <Box ref={comparisonRef} data-section="comparison"><Comparison /></Box>
       <Box ref={valuesRef} data-section="values"><Values /></Box>
       <Box ref={quizRef} data-section="quiz"><Quiz /></Box>
     </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/transparency-ai" element={<TransparencyAI />} />
+      </Routes>
+    </Router>
   );
 }
 

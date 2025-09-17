@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom"; // ✅ thêm
 
 interface NavbarProps {
   onNavigate: (section: string) => void;
@@ -31,18 +32,21 @@ const MENU = [
   { id: "comparison", label: "So sánh" },
   { id: "values", label: "Giá trị" },
   { id: "quiz", label: "Quiz" },
-  { id: "qa", label: "Q&A", link: "https://padlet.com/tuancan297/q-a-xvdvitfdi6zzs5rp" }, // thêm Q&A
+  { id: "transparency", label: "Tính minh bạch AI", route: "/transparency-ai" },
+  { id: "qa", label: "Q&A", link: "https://padlet.com/tuancan297/q-a-xvdvitfdi6zzs5rp" },
 ];
 
 export default function Navbar({ onNavigate, active }: NavbarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate(); // ✅ hook điều hướng
 
-  // hàm xử lý chung khi click menu
   const handleClick = (m: typeof MENU[number]) => {
     if (m.link) {
-      window.open(m.link, "_blank"); // mở tab mới
+      window.open(m.link, "_blank");
+    } else if (m.route) {
+      navigate(m.route);
     } else {
       onNavigate(m.id);
     }
@@ -59,8 +63,16 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Logo */}
-        <Typography sx={{ fontWeight: 800, color: "#eeb72b" }}>
+        {/* ✅ Logo có link về trang chủ */}
+        <Typography
+          onClick={() => navigate("/")}
+          sx={{
+            fontWeight: 800,
+            color: "#eeb72b",
+            cursor: "pointer",
+            "&:hover": { opacity: 0.8 },
+          }}
+        >
           HCM202_AI1805
         </Typography>
 
@@ -72,8 +84,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
                 key={m.id}
                 onClick={() => handleClick(m)}
                 sx={{
-                  color:
-                    active === m.id ? "#eeb72b" : "rgba(255,255,255,0.8)",
+                  color: active === m.id ? "#eeb72b" : "rgba(255,255,255,0.8)",
                   textTransform: "none",
                   fontWeight: active === m.id ? 700 : 500,
                   borderBottom:
@@ -90,7 +101,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
           </Box>
         )}
 
-        {/* Spirit button (always visible) */}
+        {/* Spirit button */}
         <Button
           variant="contained"
           sx={{
@@ -103,7 +114,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
           Spirit
         </Button>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile menu */}
         {isMobile && (
           <>
             <IconButton
