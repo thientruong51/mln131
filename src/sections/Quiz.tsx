@@ -13,7 +13,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import ReplayIcon from "@mui/icons-material/Replay";
 import InfoIcon from "@mui/icons-material/Info";
-import bgImg from "../assets/sosanh.png";
+import bgImg from "../assets/sosanhbg.png";
 type QA = {
   q: string;
   opts: string[];
@@ -150,12 +150,30 @@ export default function Quiz() {
         backdropFilter: { md: "blur(0.5px)" },
       }}
     >
-      <Typography variant="h4" sx={{ color: "#eeb72b", mb: 5 }}>
-        Mini Quiz
-      </Typography>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 38,
+          left: 56,
+          px: 2.2,
+          py: 1.2,
+          background: "#6464641a",
+          borderLeft: `10px solid #bd0009ff`,
+          borderRadius: 1,
+          boxShadow: "0 12px 28px rgba(0, 0, 0, 0.4)",
+          zIndex: 5,
+          maxWidth: 950,
+          mb:10
+        }}
+      >
+        <Typography sx={{ fontWeight: 900, fontSize: 30, lineHeight: 1.1, color: "#eeb72b" }}>
+          Mini Quiz
+        </Typography>
+       
+      </Box>
 
       {!done ? (
-        <Card sx={{ maxWidth: 1050, mx: "auto", bgcolor: "rgba(255,255,255,0.03)" }}>
+        <Card sx={{ maxWidth: 1050, mx: "auto", bgcolor: "rgba(255,255,255,0.03)",mt:20,ml:50 }}>
           <CardContent>
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
               <Box>

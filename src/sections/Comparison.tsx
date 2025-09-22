@@ -251,12 +251,14 @@ export default function Comparison() {
       }}
     >
       {/* Spline background */}
-      <Box
-        component="spline-viewer"
-        sx={{ position: "absolute", inset: 0 }}
-        {...({ "loading-anim-type": "none" } as any)}
-        url="https://prod.spline.design/nPQzWw-fod7rsfDx/scene.splinecode"
-      />
+    {ready && (
+  <Box
+    component="spline-viewer"
+    sx={{ position: "absolute", inset: 0 }}
+    {...({ "loading-anim-type": "none" } as any)}
+    url="https://prod.spline.design/nPQzWw-fod7rsfDx/scene.splinecode"
+  />
+)}
 
       {/* Comment floating */}
       <Box sx={{ position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none" }}>

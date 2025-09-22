@@ -30,6 +30,7 @@ const MENU = [
   { id: "pct", label: "Nhà nước pháp quyền XHCN" },
   { id: "hcm", label: "Phát huy & Xây dựng" },
   { id: "quiz", label: "Quiz" },
+  { id: "comparison", label: "Thông điệp" },
   { id: "transparency", label: "Tính minh bạch AI", route: "/transparency-ai" },
   { id: "qa", label: "Q&A", link: "https://padlet.com/trilm32/ai1805-7lvete4y5bhccuel" },
 ];
