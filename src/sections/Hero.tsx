@@ -104,14 +104,13 @@ export default function Hero() {
             mb: 2,
           }}
         >
-          Độc lập dân tộc – Từ khát vọng tiền nhân đến tư tưởng Hồ Chí Minh
+          DÂN CHỦ XÃ HỘI CHỦ NGHĨA VÀ NHÀ NƯỚC XÃ HỘI CHỦ NGHĨA
         </Typography>
         <Typography
           variant="h6"
           sx={{ color: "rgba(255,255,255,0.9)", mb: 3 }}
         >
-          Hành trình lịch sử — từ Phan Bội Châu, Phan Châu Trinh đến Hồ Chí
-          Minh. Một câu chuyện về khát vọng, con đường và giá trị thời đại.
+          Dân chủ xã hội chủ nghĩa và nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
@@ -171,11 +170,7 @@ export default function Hero() {
       variant="body1"
       sx={{ lineHeight: 1.8, fontSize: 18, color: "rgba(255,255,255,0.95)" }}
     >
-      “Trong suốt chiều dài lịch sử, khát vọng độc lập luôn cháy bỏng trong tim
-      mỗi người Việt. Các sĩ phu đầu thế kỷ XX như Phan Bội Châu, Phan Châu
-      Trinh đã dấn thân tìm đường cứu nước, nhưng chưa thành công. Hồ Chí Minh
-      đã đem đến một con đường mới, sáng tạo, gắn độc lập dân tộc với tự do,
-      hạnh phúc của nhân dân, mở ra kỷ nguyên độc lập cho dân tộc Việt Nam.”
+      “Dân chủ xã hội chủ nghĩa và Nhà nước pháp quyền XHCN ở Việt Nam là thành quả của lịch sử đấu tranh giành độc lập, đồng thời là sự lựa chọn phát triển của dân tộc. Đây là mô hình chính trị – pháp lý gắn quyền lực nhà nước với quyền làm chủ của nhân dân, bảo đảm mọi quyết định vì lợi ích của dân, do dân và phục vụ nhân dân. Khám phá hành trình này chính là tìm hiểu những giá trị, nền tảng và định hướng xây dựng đất nước trong thời kỳ mới.”
     </Typography>
   </DialogContent>
 

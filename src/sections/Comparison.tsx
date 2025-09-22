@@ -1,388 +1,383 @@
 // src/sections/Comparison.tsx
-import { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Box, TextField, IconButton, Tooltip, Typography } from "@mui/material";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+
+// Firestore
 import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Tooltip,
-} from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CloseIcon from "@mui/icons-material/Close";
-import PublicIcon from "@mui/icons-material/Public";
-import HistoryIcon from "@mui/icons-material/History";
-import StarIcon from "@mui/icons-material/Star";
-import { motion } from "framer-motion";
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  limit,
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../firebase";
 
-import hcmPortrait from "../assets/HCM.jpg";
-import pbcPortrait from "../assets/PhanBoiChau.png";
-import pctPortrait from "../assets/PhanChauTrinh.jpg";
-import sosanhBg from "../assets/sosanhbg.png";
+/* Cho phép dùng <spline-viewer> trong TSX */
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "spline-viewer": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      > & {
+        url?: string;
+        "loading-anim-type"?: string;
+        class?: string;
+      };
+    }
+  }
+}
 
-const MotionBox = motion(Box) as any;
+type FloatingComment = {
+  id: string;
+  text: string;
+  radius: number;
+  baseAngle: number;
+  angularSpeed: number;
+  size: number;
+  color: string;
+  bornAt: number;
+  ttlMs: number;
+  createdAt?: any;
+};
+
+const COLOR_POOL = [
+  "#ffe08a",
+  "#c8ff8a",
+  "#8afff3",
+  "#ffb8e6",
+  "#bda0ff",
+  "#ffcf99",
+  "#c0ffb3",
+  "#9ee7ff",
+  "#ffd6a5",
+  "#d6b8ff",
+];
 
 export default function Comparison() {
-  const [show, setShow] = useState(false);
+  const [ready, setReady] = useState(false);
+  const injected = useRef(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  const [input, setInput] = useState("");
+  const [items, setItems] = useState<FloatingComment[]>([]);
+  const animRef = useRef<number | null>(null);
+  const t0Ref = useRef<number>(performance.now());
 
-  const leaders = [
-    {
-      id: "pbc",
-      name: "Phan Bội Châu",
-      img: pbcPortrait,
-      slogan:
-        "Chủ trương tự lực, khởi nghĩa vũ trang, tìm kiếm lực lượng ngoại viện.",
-      path:
-        "Dựa vào Nhật, tổ chức Quang Phục Hội và các hoạt động vũ trang, kêu gọi thanh niên học tập, hành động nhằm giành độc lập.",
-      limitations:
-        "Phụ thuộc vào thế lực nước ngoài (Nhật), kế hoạch nhiều nơi bị thất bại, thiếu nguồn lực lâu dài.",
-      contribution:
-        "Kích thích tinh thần yêu nước, khơi dậy ý chí độc lập; đặt nền tảng tinh thần tự lực cho các phong trào sau này.",
-      years: "Hoạt động mạnh: 1904–1925",
-    },
-    {
-      id: "pct",
-      name: "Phan Châu Trinh",
-      img: pctPortrait,
-      slogan: "Cải cách ôn hòa: khai dân trí, chấn dân khí, hậu dân sinh.",
-      path:
-        "Tập trung cải cách văn hoá - giáo dục, vận động lãnh đạo thực dân thực hiện cải cách dân quyền, dùng con đường hoà bình, vận động trí thức.",
-      limitations:
-        "Tin rằng có thể tiến hành 'cải cách' dựa vào chủ trương cải tổ của thực dân; do đó hiệu quả hạn chế trong hoàn cảnh thuộc địa.",
-      contribution:
-        "Mở đầu tư tưởng dân quyền, khuyến khích giáo dục, hiện đại hoá xã hội — ảnh hưởng lớn đến nhận thức công chúng.",
-      years: "Hoạt động nổi bật: 1905–1926",
-    },
-    {
-      id: "hcm",
-      name: "Hồ Chí Minh",
-      img: hcmPortrait,
-      slogan:
-        "Kết hợp độc lập dân tộc với chủ nghĩa xã hội; đặt quyền lợi, tự do, hạnh phúc của nhân dân làm mục tiêu.",
-      path:
-        "Tổ chức và liên kết phong trào cách mạng quần chúng, thành lập Đảng (1930), thành lập Việt Minh (1941), lãnh đạo Tổng khởi nghĩa (1945).",
-      limitations: "Không",
-      contribution:
-        "Con đường lựa chọn gắn với bối cảnh thế giới và ý thức hệ thời đại; Đem lại độc lập thực sự, gắn độc lập dân tộc với lợi ích xã hội của nhân dân; đặt nền móng cho xây dựng nhà nước mới.",
-      years: "Hoạt động nổi bật: 1919–1969",
-    },
-  ];
+  // inject script spline
+  useEffect(() => {
+    if (injected.current) return;
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[data-spline="viewer"]'
+    );
+    if (existing) {
+      injected.current = true;
+      setReady(true);
+      return;
+    }
+    const s = document.createElement("script");
+    s.type = "module";
+    s.src =
+      "https://unpkg.com/@splinetool/viewer@1.9.86/build/spline-viewer.js";
+    s.dataset.spline = "viewer";
+    s.onload = () => setReady(true);
+    document.head.appendChild(s);
+    injected.current = true;
+  }, []);
+
+  // đo kích thước khung
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const cr = entry.contentRect;
+      setSize({ w: cr.width, h: cr.height });
+    });
+    ro.observe(wrapRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  // vòng lặp animation (giữ cho opacity, TTL)
+  useEffect(() => {
+    const tick = (now: number) => {
+      setItems((prev) =>
+        prev.filter((c) => c.ttlMs === 0 || now - c.bornAt < c.ttlMs)
+      );
+      animRef.current = requestAnimationFrame(tick);
+    };
+    animRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, []);
+
+  // 🔴 SUBSCRIBE Firestore: nghe comment realtime
+  useEffect(() => {
+    const q = query(
+      collection(db, "comments"),
+      orderBy("createdAt", "desc"),
+      limit(50)
+    );
+    const unsub = onSnapshot(q, (snap) => {
+      const now = performance.now();
+      const arr: FloatingComment[] = [];
+      snap.forEach((doc) => {
+        const d = doc.data() as any;
+        arr.push({
+          id: doc.id,
+          text: d.text ?? "",
+          radius: d.radius ?? 200,
+          baseAngle: d.baseAngle ?? 0,
+          angularSpeed: d.angularSpeed ?? 0.5,
+          size: d.size ?? 16,
+          color: d.color ?? "#ffe08a",
+          bornAt: now,
+          ttlMs: d.ttlMs ?? 0,
+          createdAt: d.createdAt,
+        });
+      });
+      setItems(arr.reverse());
+    });
+    return () => unsub();
+  }, []);
+
+  const center = useMemo(
+    () => ({ cx: size.w / 2, cy: size.h / 2 }),
+    [size]
+  );
+
+  const handleSubmit = async () => {
+    const text = input.trim();
+    if (!text) return;
+
+    const minR = Math.max(120, Math.min(size.w, size.h) * 0.18);
+    const maxR = Math.max(minR + 80, Math.min(size.w, size.h) * 0.42);
+    const radius = rand(minR, maxR);
+    const baseAngle = rand(0, Math.PI * 2);
+    const angularSpeed =
+      rand(0.35, 0.75) * (Math.random() < 0.5 ? -1 : 1);
+    const sizePx = Math.round(rand(14, 22));
+    const color =
+      COLOR_POOL[Math.floor(Math.random() * COLOR_POOL.length)];
+
+    try {
+      await addDoc(collection(db, "comments"), {
+        text,
+        radius,
+        baseAngle,
+        angularSpeed,
+        size: sizePx,
+        color,
+        ttlMs: 0,
+        createdAt: serverTimestamp(),
+      });
+      setInput("");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // render comment bay vòng tròn
+  const renderFloating = () => {
+    const now = performance.now();
+    return items.map((c) => {
+      const t = (now - t0Ref.current) / 1000;
+      const angle = c.baseAngle + c.angularSpeed * t;
+      const x = center.cx + c.radius * Math.cos(angle);
+      const y = center.cy + c.radius * Math.sin(angle);
+
+      let opacity = 1;
+      if (c.ttlMs > 0) {
+        const life = now - c.bornAt;
+        const fade = Math.min(
+          1,
+          Math.max(0, (c.ttlMs - life) / 1000)
+        );
+        opacity = life < 800 ? life / 800 : fade;
+      }
+
+      const deg = (angle * 180) / Math.PI + 90;
+
+      return (
+        <Box
+          key={c.id}
+          sx={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            transform: `translate(${x}px, ${y}px) rotate(${deg}deg) translate(-50%, -50%)`,
+            willChange: "transform, opacity",
+            pointerEvents: "none",
+            opacity,
+            zIndex: 2,
+            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.6))",
+          }}
+        >
+          <Box
+            sx={{
+              transform: "rotate(-90deg)",
+              px: 1.2,
+              py: 0.6,
+              borderRadius: 999,
+              background: "rgba(0,0,0,0.35)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              backdropFilter: "blur(2px)",
+              whiteSpace: "nowrap",
+              fontSize: c.size,
+              fontWeight: 700,
+              color: c.color,
+              letterSpacing: 0.4,
+              textShadow: "0 1px 2px rgba(0,0,0,0.5)",
+            }}
+          >
+            {c.text}
+          </Box>
+        </Box>
+      );
+    });
+  };
 
   return (
     <Box
+      ref={wrapRef}
       sx={{
         position: "relative",
-        py: 8,
-        px: { xs: 2, md: 8 },
-        color: "#fff",
-        minHeight: "100vh",
-        backgroundImage: `url(${sosanhBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        width: "100%",
         overflow: "hidden",
+        bgcolor: "black",
       }}
     >
-      {/* Overlay gradient + slight blur (nằm dưới nội dung) */}
+      {/* Spline background */}
+      <Box
+        component="spline-viewer"
+        sx={{ position: "absolute", inset: 0 }}
+        {...({ "loading-anim-type": "none" } as any)}
+        url="https://prod.spline.design/nPQzWw-fod7rsfDx/scene.splinecode"
+      />
+
+      {/* Comment floating */}
+      <Box sx={{ position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none" }}>
+        {renderFloating()}
+      </Box>
+      {/* Lời cảm ơn & hướng dẫn */}
       <Box
         sx={{
           position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 70%)",
-          backdropFilter: "blur(2px)",
-          zIndex: 0,
+          left: 0,
+          right: 0,
+          top: 16,
+          display: "flex",
+          justifyContent: "center",
+          zIndex: 3,
+          px: 2,
+          pointerEvents: "none", // không bắt chuột toàn khối
         }}
-      />
-
-      {/* Nội dung chính (zIndex cao hơn overlay) */}
-      <Box sx={{ position: "relative", zIndex: 1 }}>
-        <Typography
-          variant="h4"
+      >
+        <Box
           sx={{
-            color: "#eeb72b",
-            mb: 1,
-            textShadow: "0px 3px 8px rgba(0,0,0,0.85)",
-            fontWeight: 800,
+            pointerEvents: "auto", // cho phép bôi đen copy text
+            width: "min(1100px, 92vw)",
+            px: 1.6,
+            py: 1,
+            borderRadius: 999,
+            background: "rgba(0,0,0,0.5)",
+            border: "1px solid rgba(255,255,255,0.18)",
+            backdropFilter: "blur(8px)",
+            boxShadow: "0 8px 28px rgba(0,0,0,0.45)",
           }}
         >
-          So sánh – Kế thừa & Sáng tạo
-        </Typography>
-
-        <Typography
-          sx={{
-            mb: 3,
-            textShadow: "0px 2px 6px rgba(0,0,0,0.75)",
-            color: "rgba(255,255,255,0.92)",
-          }}
-        >
-          “Hồ Chí Minh đã kế thừa tinh thần yêu nước của tiền nhân, đồng thời sáng
-          tạo một con đường mới phù hợp với thời đại.”
-        </Typography>
-
-        {/* Nút toggle */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
-          <Button
-            variant="contained"
-            onClick={() => setShow((s) => !s)}
+          <Typography
             sx={{
-              bgcolor: "#eeb72b",
-              color: "#8b1f20",
-              fontWeight: 700,
-              borderRadius: "999px",
-              px: 4,
-              py: 1.2,
-              boxShadow: "0px 6px 18px rgba(0,0,0,0.35)",
+              color: "rgba(255,255,255,0.92)",
+              fontSize: { xs: 13.5, md: 15 },
+              lineHeight: 1.6,
+              textAlign: "center",
+              fontWeight: 500,
             }}
           >
-            {show ? "Ẩn so sánh" : "So sánh"}
-          </Button>
+            <strong style={{ fontWeight: 800, color: "#eeb72b" }}>
+              Cảm ơn bạn đã quan tâm sản phẩm!
+            </strong>
+            <br />
+            Bạn có thể để lại lời nhắn hay thông điệp bên dưới — nội dung sẽ xuất hiện
+            và bay vòng quanh màn hình để mọi người cùng thấy ✨
+          </Typography>
+
         </Box>
+      </Box>
 
-        {!show ? (
-          // --- Trước khi so sánh: 2 ảnh chồng vs 1 ảnh bên phải ---
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: { xs: 2, md: 50 },
-              flexWrap: "wrap",
+
+      {/* Ô nhập bình luận */}
+      <Box
+        sx={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 20,
+          display: "flex",
+          justifyContent: "center",
+          zIndex: 3,
+          px: 2,
+          pointerEvents: "auto",
+        }}
+      >
+        <Box
+          sx={{
+            width: "min(900px, 92vw)",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            background: "rgba(0,0,0,0.5)",
+            border: "1px solid rgba(255,255,255,0.18)",
+            borderRadius: 999,
+            px: 1.2,
+            py: 0.6,
+            backdropFilter: "blur(8px)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.45)",
+          }}
+        >
+          <TextField
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSubmit();
             }}
-          >
-            {/* Left: PBC & PCT stacked */}
-            <Box
+            placeholder="Viết bình luận của bạn…"
+            variant="standard"
+            InputProps={{
+              disableUnderline: true,
+              sx: {
+                color: "white",
+                px: 1.5,
+                py: 1,
+                fontSize: { xs: 14, md: 16 },
+                width: "100%",
+              },
+            }}
+            sx={{ flex: 1 }}
+          />
+          <Tooltip title="Gửi bình luận">
+            <IconButton
+              onClick={handleSubmit}
               sx={{
-                width: { xs: "100%", sm: 260, md: 320 },
-                position: "relative",
-                height: { xs: 360, sm: 400, md: 460 },
+                color: "white",
+                bgcolor: "rgba(255,255,255,0.12)",
+                "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
               }}
             >
-              {/* PBC (behind) */}
-              <MotionBox
-                animate={{ rotate: [-6, -10, -6] }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: -100,
-                  zIndex: 1,
-                }}
-              >
-                <Tooltip title="Phan Bội Châu" arrow>
-                  <Card
-                    sx={{
-                      width: { xs: 220, sm: 260, md: 320 },
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      boxShadow: 8,
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={pbcPortrait}
-                      alt="Phan Bội Châu"
-                      sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-                    />
-                  </Card>
-                </Tooltip>
-              </MotionBox>
-
-              {/* PCT (front-left) */}
-              <MotionBox
-                animate={{ rotate: [6, 10, 6] }}
-                transition={{
-                  duration: 2.8,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                sx={{ position: "absolute", top: 0, left: 60, zIndex: 2 }}
-              >
-                <Tooltip title="Phan Châu Trinh" arrow>
-                  <Card
-                    sx={{
-                      width: { xs: 220, sm: 260, md: 320 },
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      boxShadow: 10,
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={pctPortrait}
-                      alt="Phan Châu Trinh"
-                      sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-                    />
-                  </Card>
-                </Tooltip>
-              </MotionBox>
-            </Box>
-
-            {/* Right: HCM single portrait */}
-            <Box
-              sx={{
-                width: { xs: "100%", sm: 260, md: 320 },
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <MotionBox
-                animate={{ rotate: [-2, 2, -2] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                sx={{ zIndex: 3 }}
-              >
-                <Tooltip title="Hồ Chí Minh" arrow>
-                  <Card
-                    sx={{
-                      width: { xs: 220, sm: 260, md: 360 },
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      border: "2px solid #eeb72b",
-                      boxShadow: 10,
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={hcmPortrait}
-                      alt="Hồ Chí Minh"
-                      sx={{ height: { xs: 320, sm: 380, md: 460 } }}
-                    />
-                  </Card>
-                </Tooltip>
-              </MotionBox>
-            </Box>
-          </Box>
-        ) : (
-          // --- Sau khi bấm So sánh: show cards với thông tin ---
-          <Box
-            sx={{
-              display: "flex",
-              gap: 3,
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            {leaders.map((ld, idx) => (
-              <MotionBox
-                key={ld.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.15 }}
-              >
-                <Card
-                  sx={{
-                    width: { xs: "100%", sm: 340, md: 420 },
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    border:
-                      ld.id === "hcm"
-                        ? "2px solid #eeb72b"
-                        : "1px solid rgba(255,255,255,0.06)",
-                    boxShadow: "0 12px 30px rgba(0,0,0,0.6)",
-                    bgcolor: "rgba(0,0,0,0.55)",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    image={ld.img}
-                    alt={ld.name}
-                    sx={{ height: { xs: 300, sm: 420, md: 500 } }}
-                  />
-                  <CardContent>
-                    <Typography
-                      variant="h6"
-                      sx={{ color: "#eeb72b", fontWeight: 800 }}
-                    >
-                      {ld.name}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      sx={{ mb: 1, fontSize: { xs: 12, sm: 13 } }}
-                    >
-                      {ld.slogan}
-                    </Typography>
-                    <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.06)" }} />
-                    <List dense>
-                      <ListItem>
-                        <ListItemIcon sx={{ minWidth: 30 }}>
-                          <PublicIcon sx={{ color: "#eeb72b" }} fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Con đường:"
-                          secondary={ld.path}
-                          secondaryTypographyProps={{
-                            fontSize: { xs: 12, sm: 13 },
-                          }}
-                        />
-                      </ListItem>
-
-                      <ListItem>
-                        <ListItemIcon sx={{ minWidth: 30 }}>
-                          <CloseIcon sx={{ color: "#ff6b6b" }} fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Hạn chế:"
-                          secondary={ld.limitations}
-                          secondaryTypographyProps={{
-                            fontSize: { xs: 12, sm: 13 },
-                          }}
-                        />
-                      </ListItem>
-
-                      <ListItem>
-                        <ListItemIcon sx={{ minWidth: 30 }}>
-                          <CheckCircleIcon sx={{ color: "#9be15d" }} fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Đóng góp:"
-                          secondary={ld.contribution}
-                          secondaryTypographyProps={{
-                            fontSize: { xs: 12, sm: 13 },
-                          }}
-                        />
-                      </ListItem>
-
-                      <ListItem>
-                        <ListItemIcon sx={{ minWidth: 30 }}>
-                          <HistoryIcon sx={{ color: "#eeb72b" }} fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Thời kỳ:"
-                          secondary={ld.years}
-                          secondaryTypographyProps={{
-                            fontSize: { xs: 12, sm: 13 },
-                          }}
-                        />
-                      </ListItem>
-                    </List>
-
-                    <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.06)" }} />
-
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <StarIcon sx={{ color: "#eeb72b" }} />
-                      <Typography variant="caption">Kế thừa & sáng tạo</Typography>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </MotionBox>
-            ))}
-          </Box>
-        )}
+              <SendRoundedIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
       </Box>
     </Box>
   );
+}
+
+// util
+function rand(min: number, max: number) {
+  return Math.random() * (max - min) + min;
 }

@@ -13,7 +13,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import ReplayIcon from "@mui/icons-material/Replay";
 import InfoIcon from "@mui/icons-material/Info";
-
+import bgImg from "../assets/sosanh.png";
 type QA = {
   q: string;
   opts: string[];
@@ -23,109 +23,62 @@ type QA = {
 
 const questions: QA[] = [
   {
-    q: "Điểm khác biệt cơ bản trong tư tưởng độc lập dân tộc của Hồ Chí Minh so với Phan Bội Châu là gì?",
+    q: "Nguyên tắc cốt lõi bảo đảm dân chủ xã hội chủ nghĩa ở Việt Nam là gì?",
     opts: [
-      "Phan Bội Châu chủ trương dựa vào ngoại bang và bạo động vũ trang, còn Hồ Chí Minh nhấn mạnh tự lực tự cường, dựa vào sức mạnh nhân dân",
-      "Phan Bội Châu chủ trương dựa vào quần chúng trong nước, còn Hồ Chí Minh thiên về liên minh với ngoại bang để giành độc lập",
-      "Phan Bội Châu kết hợp cải cách xã hội và cách mạng vô sản, còn Hồ Chí Minh chỉ nhấn mạnh cải cách văn hóa"
+      "Quyền công dân chỉ phát sinh khi tham gia hoạt động chính trị – xã hội cụ thể",
+      "Quyền lực nhân dân luôn đứng trên pháp luật, không chịu sự ràng buộc từ hệ thống",
+      "Pháp luật và kỷ cương có thể được điều chỉnh để phù hợp với từng nhóm lợi ích",
+      "Quyền của nhân dân luôn đi đôi với nghĩa vụ, pháp luật, kỷ cương và trách nhiệm"
     ],
-    a: 0,
-    explanation: "Hồ Chí Minh chủ trương dựa vào sức mạnh dân tộc và nhân dân, khác với Phan Bội Châu vốn đặt niềm tin vào ngoại bang như Nhật Bản."
+    a: 3,
+    explanation: "Dân chủ XHCN gắn với pháp luật, kỷ cương và trách nhiệm công dân; quyền luôn đi liền với nghĩa vụ."
   },
   {
-    q: "Phan Châu Trinh khác Hồ Chí Minh ở điểm nào trong cách tiếp cận vấn đề độc lập dân tộc?",
+    q: "Điểm khác biệt căn bản của Nhà nước pháp quyền XHCN Việt Nam so với nhà nước pháp quyền tư sản là gì?",
     opts: [
-      "Phan Châu Trinh thiên về bạo động, dựa vào Nhật Bản, còn Hồ Chí Minh thiên về cải cách văn hóa dựa vào trí thức",
-      "Phan Châu Trinh chủ trương cải cách, dựa vào Pháp, còn Hồ Chí Minh chủ trương cách mạng giải phóng dân tộc bằng sức mạnh toàn dân",
-      "Phan Châu Trinh chủ trương khai dân trí, chấn dân khí, hậu dân sinh, còn Hồ Chí Minh chỉ dừng lại ở mục tiêu độc lập chính trị"
-    ],
-    a: 1,
-    explanation: "Phan Châu Trinh đi theo hướng cải cách, dựa vào Pháp, trong khi Hồ Chí Minh chủ trương cách mạng giải phóng bằng lực lượng toàn dân."
-  },
-  {
-    q: "Trong tư tưởng Hồ Chí Minh, độc lập dân tộc phải gắn liền với điều gì?",
-    opts: [
-      "Độc lập phải gắn với tự do và hạnh phúc của nhân dân, coi nhân dân là chủ thể thụ hưởng thành quả cách mạng",
-      "Độc lập gắn với việc dựa vào một cường quốc để được bảo hộ, từ đó mới có thể xây dựng đời sống nhân dân",
-      "Độc lập gắn với việc canh tân đất nước theo mô hình phương Tây, trước hết về kinh tế và giáo dục"
-    ],
-    a: 0,
-    explanation: "Hồ Chí Minh khẳng định độc lập phải gắn liền với tự do, hạnh phúc của nhân dân, khác với quan niệm lệ thuộc ngoại bang hoặc chỉ thiên về cải cách."
-  },
-  {
-    q: "Câu nói 'Không có gì quý hơn độc lập, tự do' thể hiện tư tưởng gì của Hồ Chí Minh?",
-    opts: [
-      "Khẳng định độc lập dân tộc chỉ cần thiết khi có sự bảo trợ từ quốc tế, nhờ đó mới duy trì tự do",
-      "Khẳng định cần ưu tiên cải cách xã hội và nâng cao dân trí, rồi sau đó mới nghĩ đến vấn đề độc lập dân tộc",
-      "Khẳng định giá trị tối cao của độc lập dân tộc gắn với tự do, sẵn sàng hy sinh để bảo vệ Tổ quốc",
-
+      "Quyền lực nhà nước được phân công, phối hợp và kiểm soát giữa lập pháp, hành pháp, tư pháp",
+      "Tổ chức và hoạt động đều dựa trên nguyên tắc tập trung dân chủ trong toàn bộ hệ thống",
+      "Đặt dưới sự lãnh đạo của Đảng Cộng sản Việt Nam và hướng tới mục tiêu xã hội chủ nghĩa",
+      "Nhà nước thượng tôn Hiến pháp, pháp luật và bảo đảm sự bình đẳng của mọi công dân"
     ],
     a: 2,
-    explanation: "Câu nói khẳng định độc lập gắn với tự do là giá trị thiêng liêng nhất, không thể thay thế bằng cải cách đơn thuần hay sự bảo hộ quốc tế."
+    explanation: "Khác biệt căn bản là Nhà nước XHCN đặt dưới sự lãnh đạo của Đảng và hướng tới mục tiêu XHCN."
   },
   {
-    q: "Phong trào Đông Du của Phan Bội Châu thất bại chủ yếu vì lý do nào?",
+    q: "Cơ chế 'Đảng lãnh đạo – Nhà nước quản lý – Nhân dân làm chủ' phản ánh điều gì?",
     opts: [
-      "Nhân dân Việt Nam lúc đó chưa có khát vọng độc lập nên không ủng hộ phong trào, dẫn đến thất bại",
-      "Nhật Bản thỏa hiệp với Pháp và trục xuất lưu học sinh, phong trào thiếu cơ sở trong nước nên nhanh chóng tan rã",
-      "Phan Châu Trinh và các trí thức cải cách đã công khai phản đối nên phong trào mất uy tín và suy yếu"
-    ],
-    a: 1,
-    explanation: "Phong trào thất bại vì dựa vào Nhật, khi Nhật trục xuất lưu học sinh thì mất chỗ dựa, trong nước chưa có cơ sở vững chắc."
-  },
-  {
-    q: "Hồ Chí Minh đã kết hợp sức mạnh dân tộc với yếu tố nào để giành độc lập?",
-    opts: [
-      "Kết hợp sức mạnh dân tộc với sự bảo hộ của các nước đế quốc, nhằm tránh bị cô lập về chính trị",
-      "Kết hợp sức mạnh dân tộc với cải cách kinh tế - xã hội theo mô hình phương Tây, lấy phát triển làm nền tảng",
-      "Kết hợp sức mạnh dân tộc với phong trào cách mạng thế giới, tạo sự cộng hưởng giữa dân tộc và thời đại",
-
-    ],
-    a: 2,
-    explanation: "Hồ Chí Minh gắn cách mạng Việt Nam với phong trào cách mạng thế giới, chứ không phụ thuộc vào bảo hộ hay chỉ cải cách nội bộ."
-  },
-  {
-    q: "Giá trị thời đại của tư tưởng Hồ Chí Minh về độc lập dân tộc là gì?",
-    opts: [
-      "Truyền cảm hứng cho phong trào giải phóng dân tộc ở châu Á, Phi, Mỹ Latinh, khẳng định quyền thiêng liêng của mọi dân tộc",
-      "Chỉ có ý nghĩa cho cách mạng Việt Nam, không phù hợp với bối cảnh quốc tế vì mang tính địa phương",
-      "Chủ yếu phục vụ cho quan hệ ngoại giao của Việt Nam, ít ảnh hưởng đến các phong trào giải phóng ở nơi khác"
+      "Sự vận hành thống nhất bảo đảm dân chủ thực chất chứ không dừng lại ở hình thức",
+      "Sự phân tầng quyền lực trong đó Đảng giữ toàn bộ quyền lực, Nhà nước chỉ thực thi",
+      "Sự phân công cứng nhắc giữa ba chủ thể quyền lực trong toàn bộ hệ thống chính trị",
+      "Sự tách biệt hoàn toàn quyền lực nhằm ngăn ngừa lạm quyền và tập trung quá mức"
     ],
     a: 0,
-    explanation: "Tư tưởng Hồ Chí Minh có giá trị toàn cầu, cổ vũ phong trào giải phóng dân tộc ở nhiều châu lục."
+    explanation: "Cơ chế này phản ánh sự vận hành thống nhất, bảo đảm dân chủ thực sự; không phải phân tầng hay tách biệt."
   },
   {
-    q: "Khác với các tiền nhân, Hồ Chí Minh gắn độc lập dân tộc với mục tiêu nào?",
+    q: "Theo lý thuyết, dân chủ trong lĩnh vực kinh tế của nhân dân được thể hiện ở điểm nào?",
     opts: [
-      "Gắn độc lập dân tộc với việc phục hồi chế độ quân chủ, xem đó là nền tảng giữ gìn bản sắc dân tộc",
-      "Gắn độc lập dân tộc với chủ nghĩa xã hội, coi đây là con đường bảo đảm hạnh phúc, công bằng, dân chủ",
-      "Gắn độc lập dân tộc với việc canh tân theo mô hình tư sản, xây dựng xã hội theo kiểu phương Tây"
-    ],
-    a: 1,
-    explanation: "Hồ Chí Minh khẳng định độc lập dân tộc phải gắn với chủ nghĩa xã hội, không dừng lại ở khôi phục quân chủ hay tư sản hóa."
-  },
-  {
-    q: "Trong Tuyên ngôn Độc lập 1945, Hồ Chí Minh đã trích dẫn những văn kiện nào để khẳng định quyền độc lập của dân tộc Việt Nam?",
-    opts: [
-      "Trích Tuyên ngôn Độc lập Mỹ 1776 và Tuyên ngôn Nhân quyền và Dân quyền Pháp 1791 để khẳng định quyền tự do, bình đẳng của mọi dân tộc",
-      "Trích Hiến pháp Liên Xô 1918 và Cương lĩnh Quốc tế Cộng sản để nhấn mạnh tính tiên phong của giai cấp vô sản",
-      "Trích Tuyên ngôn của Anh về quyền công dân và Tuyên ngôn Nhân quyền của Liên Hợp Quốc để khẳng định giá trị phổ quát"
-    ],
-    a: 0,
-    explanation: "Hồ Chí Minh trích dẫn Mỹ và Pháp để khẳng định quyền độc lập của Việt Nam là phù hợp với các giá trị phổ quát mà chính họ công nhận."
-  },
-  {
-    q: "Điểm chung giữa các tiền nhân và Hồ Chí Minh trong tư tưởng độc lập dân tộc là gì?",
-    opts: [
-      "Đều dựa vào sự giúp đỡ trực tiếp của ngoại bang để giành độc lập và phát triển đất nước",
-      "Đều coi cải cách xã hội là điều kiện tiên quyết, sau đó mới đặt vấn đề độc lập dân tộc",
-      "Đều đặt khát vọng độc lập dân tộc lên hàng đầu, dù con đường thực hiện có sự khác nhau",
+      "Quyền tham gia quản lý xã hội, ứng cử vào cơ quan quyền lực và trưng cầu ý dân",
+      "Quyền sáng tạo, hưởng thụ các giá trị văn hóa, giáo dục, khoa học và y tế hiện đại",
+      "Quyền làm chủ về tài sản công, quyền lựa chọn việc làm, kinh doanh và phân phối",
+      "Quyền tham gia giám sát, phản biện xã hội đối với hoạt động của bộ máy nhà nước"
     ],
     a: 2,
-    explanation: "Điểm chung là khát vọng độc lập dân tộc, khác nhau ở chỗ con đường: Hồ Chí Minh tự lực, tiền nhân phụ thuộc ngoại bang hoặc cải cách."
+    explanation: "Dân chủ kinh tế thể hiện ở quyền làm chủ tài sản công, lựa chọn việc làm, kinh doanh và hưởng thụ thành quả."
+  },
+  {
+    q: "Một trong những đặc trưng cơ bản của Nhà nước pháp quyền XHCN Việt Nam là gì?",
+    opts: [
+      "Quyền lực nhà nước thống nhất nhưng có sự phân công, phối hợp và kiểm soát chặt chẽ",
+      "Quyền lực được chia tách hoàn toàn, không có cơ chế phối hợp giữa các cơ quan nhà nước",
+      "Quyền lập pháp giữ vị trí tối cao, hành pháp và tư pháp chỉ thi hành theo mệnh lệnh",
+      "Quyền lực được phân tán cho nhiều đảng phái, phản ánh mô hình đa nguyên chính trị"
+    ],
+    a: 0,
+    explanation: "Đặc trưng nổi bật là quyền lực thống nhất nhưng có phân công, phối hợp, kiểm soát giữa lập pháp, hành pháp, tư pháp."
   }
-
 ];
+
 
 
 export default function Quiz() {
@@ -181,14 +134,28 @@ export default function Quiz() {
     setShowExplanation(false);
   };
 
-  return (
-    <Box sx={{ minHeight: "100vh", py: 8, px: { xs: 2, md: 8 }, color: "#fff" }}>
+ return (
+    <Box
+      sx={{
+        minHeight: "100vh",
+        py: 8,
+        px: { xs: 2, md: 8 },
+        color: "#fff",
+        position: "relative",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.6)), url(${bgImg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+
+        backdropFilter: { md: "blur(0.5px)" },
+      }}
+    >
       <Typography variant="h4" sx={{ color: "#eeb72b", mb: 5 }}>
-        Mini Quiz — Tư tưởng & lịch sử
+        Mini Quiz
       </Typography>
 
       {!done ? (
-        <Card sx={{ maxWidth: 840, mx: "auto", bgcolor: "rgba(255,255,255,0.03)" }}>
+        <Card sx={{ maxWidth: 1050, mx: "auto", bgcolor: "rgba(255,255,255,0.03)" }}>
           <CardContent>
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
               <Box>
@@ -200,7 +167,7 @@ export default function Quiz() {
                 </Typography>
               </Box>
 
-              <Box sx={{ width: 220 }}>
+              <Box sx={{ width: 150 }}>
                 <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 2 }} />
                 <Typography variant="caption" sx={{ color: "rgba(255, 217, 0, 0.9)", mt: 0.5 }}>
                   Tiến trình: {idx}/{questions.length}

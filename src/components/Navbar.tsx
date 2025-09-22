@@ -25,15 +25,13 @@ interface NavbarProps {
 
 const MENU = [
   { id: "home", label: "Tuyên ngôn độc lập" },
-  { id: "pbc", label: "Phan Bội Châu" },
-  { id: "pct", label: "Phan Châu Trinh" },
-  { id: "hcmInfor", label: "Hồ Chí Minh" },
-  { id: "hcm", label: "Tư tưởng" },
-  { id: "comparison", label: "So sánh" },
-  { id: "values", label: "Giá trị" },
+    { id: "hero", label: "Hành trình" },
+  { id: "pbc", label: "Dân chủ XHCN" },
+  { id: "pct", label: "Nhà nước pháp quyền XHCN" },
+  { id: "hcm", label: "Phát huy & Xây dựng" },
   { id: "quiz", label: "Quiz" },
   { id: "transparency", label: "Tính minh bạch AI", route: "/transparency-ai" },
-  { id: "qa", label: "Q&A", link: "https://padlet.com/tuancan297/q-a-xvdvitfdi6zzs5rp" },
+  { id: "qa", label: "Q&A", link: "https://padlet.com/trilm32/ai1805-7lvete4y5bhccuel" },
 ];
 
 export default function Navbar({ onNavigate, active }: NavbarProps) {
@@ -73,7 +71,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
             "&:hover": { opacity: 0.8 },
           }}
         >
-          HCM202_AI1805
+          MLN131_AI1805
         </Typography>
 
         {/* Desktop menu */}
@@ -111,7 +109,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
             "&:hover": { bgcolor: "#ffd77a" },
           }}
         >
-          Spirit
+          Nhóm 4
         </Button>
 
         {/* Mobile menu */}

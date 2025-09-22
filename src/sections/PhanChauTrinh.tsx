@@ -1,338 +1,380 @@
-import { useState } from "react";
+// sections/CircularShowcase.tsx
+import { useMemo, useState } from "react";
 import {
   Box,
   Typography,
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
+  Tooltip,
+  Button,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import pctPortrait from "../assets/PhanChauTrinh.jpg";
-import pctVideo from "../assets/videoplayback (3).mp4";
 
-export default function PhanChauTrinh() {
-  const [openDetail, setOpenDetail] = useState(false);
+// === BG VIDEO ===
+import bgVideo from "../assets/videoplayback (7).mp4";
 
-  const milestones = [
-    { year: "1903", text: "Đỗ Phó bảng, từ quan sớm để dấn thân cải cách" },
-    {
-      year: "1906",
-      text: "Cùng với Huỳnh Thúc Kháng, Trần Quý Cáp vận động Duy Tân ở Trung Kỳ",
-    },
-    {
-      year: "1908",
-      text: "Phong trào chống thuế miền Trung, bị bắt và kết án tử hình (sau giảm án)",
-    },
-    { year: "1911", text: "Sang Pháp, vận động cải cách và tố cáo chính sách thực dân" },
-    {
-      year: "1925",
-      text: "Về nước, diễn thuyết nổi tiếng tại Sài Gòn, kêu gọi dân quyền và cải cách",
-    },
-    { year: "1926", text: "Qua đời, tang lễ trở thành phong trào chính trị lớn" },
-  ];
+// Ảnh: thay bằng ảnh thật của bạn
+import centerImg from "../assets/2to.png";
+import hero1 from "../assets/hero1.png";
+import hero2 from "../assets/hero2.png";
+import hero3 from "../assets/hero3.png";
+
+interface OrbitItem {
+  key: string;
+  title: string;
+  brief: string;
+  details: string[];
+  img: string;
+  top: string;
+  left: string;
+  size?: number;
+}
+
+export default function CircularShowcase() {
+  const [openKey, setOpenKey] = useState<string | null>(null);
+
+  // Các mốc
+  const items = useMemo<OrbitItem[]>(
+    () => [
+      {
+        key: "khai-niem",
+        title: "Quan niệm",
+        brief:
+          "Nhà nước của dân, do dân, vì dân.\n\n" +
+          "Hoạt động trên nền Hiến pháp & pháp luật\n\n" +
+          "Khác với tư sản vì đặt dưới sự lãnh đạo của ĐCSVN\n\n" +
+          "Hướng tới mục tiêu XHCN",
+        details: [
+          "NNPQ XHCN Việt Nam: của nhân dân, do nhân dân, vì nhân dân; tổ chức, hoạt động trên nền tảng Hiến pháp và pháp luật; bảo đảm công bằng, dân chủ, văn minh.",
+          "Khác với nhà nước pháp quyền tư sản ở chỗ: luôn đặt dưới sự lãnh đạo của Đảng Cộng sản Việt Nam, nhằm mục tiêu XHCN, không đa nguyên chính trị.",
+        ],
+        img: hero1,
+        top: "10%",
+        left: "30%",
+        size: 180,
+      },
+      {
+        key: "dac-trung",
+        title: "Đặc trưng cơ bản",
+        brief:
+          "Nhân dân là chủ thể quyền lực.\n\n" +
+          "Thượng tôn Hiến pháp & pháp luật.\n\n" +
+          "Quyền lực thống nhất, có phân công – phối hợp – kiểm soát.\n\n" +
+          "Tôn trọng, bảo vệ quyền con người, quyền công dân.\n\n" +
+          "Đảng lãnh đạo\n\n" +
+          "Nguyên tắc tập trung dân chủ.",
+        details: [
+          "Nhân dân là chủ thể tối cao của quyền lực nhà nước.",
+          "Thượng tôn pháp luật: Hiến pháp, pháp luật có vị trí tối thượng; mọi tổ chức, cá nhân đều bình đẳng trước pháp luật.",
+          "Quyền lực nhà nước thống nhất, nhưng phân công, phối hợp, kiểm soát giữa ba quyền: lập pháp, hành pháp, tư pháp.",
+          "Tôn trọng, bảo vệ, bảo đảm quyền con người, quyền công dân.",
+          "Đặt dưới sự lãnh đạo của Đảng Cộng sản Việt Nam.",
+          "Tổ chức và hoạt động theo nguyên tắc tập trung dân chủ.",
+        ],
+        img: hero2,
+        top: "45%",
+        left: "45%",
+        size: 180,
+      },
+      {
+        key: "vai-tro",
+        title: "Cơ sở pháp lý – chính trị",
+        brief: "Hiến pháp 2013,\n\nNghị quyết 27-NQ/TW (2022).",
+        details: [
+          "Hiến pháp 2013: Chương II khẳng định quyền con người, quyền công dân; quy định rõ ràng cơ chế phân công – phối hợp – kiểm soát quyền lực.",
+          "Nghị quyết 27-NQ/TW (2022): xác định các định hướng lớn để tiếp tục xây dựng và hoàn thiện NNPQ XHCN trong giai đoạn mới.",
+        ],
+        img: hero3,
+        top: "80%",
+        left: "30%",
+        size: 180,
+      },
+    ],
+    []
+  );
 
   return (
     <Box
       sx={{
         position: "relative",
-        minHeight: "100vh",
-        color: "#fff",
         py: 8,
-        px: { xs: 2, md: 8 },
-        overflow: "hidden",
+        px: { xs: 2, md: 6 },
+        color: "#fff",
+        minHeight: "100vh",
+        overflow: "hidden", // clip video
       }}
     >
-      <Box
+      {/* === VIDEO BACKGROUND (section-scoped) === */}
+     <Box
         component="video"
-        src={pctVideo}
+        src={bgVideo}
         autoPlay
-        loop
         muted
+        loop
         playsInline
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: -2,
-        }}
-      />
-      {/* Overlay tối để chữ nổi bật */}
-      <Box
+        preload="auto"
+        aria-hidden
         sx={{
           position: "absolute",
           inset: 0,
-          bgcolor: "rgba(0,0,0,0.55)",
-          zIndex: -1,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+          filter: "brightness(0.65) contrast(1.05)", // làm tối để chữ nổi
+          // Nếu muốn cố định theo viewport (không cuộn), đổi sang position:"fixed"
+          // và thêm "pointerEvents:'none'"
         }}
       />
+
+      {/* Lớp tint nhẹ để đảm bảo tương phản */}
+      <Box
+        aria-hidden
+        sx={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          background:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.21), rgba(0, 0, 0, 0.46))",
+        }}
+      />
+
+      {/* Banner góc phải */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 18,
+          right: 16,
+          px: 2.2,
+          py: 1.2,
+          background: "#6464641a",
+          borderLeft: `10px solid #bd0009ff`,
+          borderRadius: 1,
+          boxShadow: "0 12px 28px rgba(0, 0, 0, 0.4)",
+          zIndex: 5,
+          maxWidth: 950,
+        }}
+      >
+        <Typography sx={{ fontWeight: 900, fontSize: 30, lineHeight: 1.1, color: "#eeb72b" }}>
+          Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam
+        </Typography>
+        <Typography sx={{ mt: 0.75, opacity: 0.9, fontSize: 15 }}>
+          Quan niệm – Đặc trưng – Cơ sở pháp lý – Chính trị
+        </Typography>
+      </Box>
+
       <Box
         sx={{
           position: "relative",
-          display: "flex",
-          flexDirection: { xs: "column-reverse", md: "row" },
-          gap: 6,
-          alignItems: "flex-start",
-          maxWidth: 1200,
+          maxWidth: "none",
           mx: "auto",
+          minHeight: 720,
+          overflow: "visible",
+          zIndex: 2, // nằm trên video + tint
         }}
       >
-        {/* Văn bản + timeline */}
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="overline" sx={{ color: "#eeb72b" }}>
-            Nhà cải cách – Tư tưởng dân quyền
-          </Typography>
-          <Typography
-            variant="h3"
-            sx={{ fontWeight: 700, color: "#fff", mt: 1, mb: 3 }}
-          >
-            Phan Châu Trinh (1872 – 1926)
-          </Typography>
+        
 
-          <Typography sx={{ fontStyle: "italic", color: "#eeb72b", mb: 3 }}>
-            “Khai dân trí, chấn dân khí, hậu dân sinh.”
-          </Typography>
-
-          <Box sx={{ display: "flex", gap: 2, mb: 6 }}>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#eeb72b",
-                color: "#8b1f20",
-                fontWeight: 700,
-                borderRadius: "999px",
-              }}
-              onClick={() => setOpenDetail(true)}
-            >
-              Đọc thêm
-            </Button>
-            <Button
-              variant="outlined"
-              component="a"
-              href="https://thptphanchautrinh.hcm.edu.vn/gioi-thieu/tieu-su-cu-phan-chau-trinh/ctmb/26910/123330"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                borderColor: "rgba(255,255,255,0.5)",
-                color: "#fff",
-                borderRadius: "999px",
-              }}
-            >
-              Nguồn
-            </Button>
-          </Box>
-
-          {/* Timeline dọc với animation */}
-          <Box
-            sx={{
-              position: "relative",
-              pl: 4,
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                top: 0,
-                left: "12px",
-                width: "2px",
-                height: "100%",
-                bgcolor: "#eeb72b",
-              },
-            }}
-          >
-            {milestones.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: idx * 0.2 }}
-              >
-                <Box sx={{ mb: 4, position: "relative", pl: 4 }}>
-                  {/* Node tròn pulse */}
-                  <motion.div
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    whileInView={{ scale: [1.2, 1], opacity: 1 }}
-                    transition={{ duration: 0.6, delay: idx * 0.2 }}
-                    viewport={{ once: true }}
-                    style={{
-                      position: "absolute",
-                      top: 4,
-                      left: "-4px",
-                      width: 16,
-                      height: 16,
-                      borderRadius: "50%",
-                      background: "#eeb72b",
-                      border: "2px solid #fff",
-                      boxShadow: "0 0 12px rgba(238,183,43,0.6)",
-                    }}
-                  />
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: 700, color: "#eeb72b", mb: 1 }}
-                  >
-                    {item.year}
-                  </Typography>
-                  <Typography sx={{ color: "rgba(255,255,255,0.9)" }}>
-                    {item.text}
-                  </Typography>
-                </Box>
-              </motion.div>
-            ))}
-          </Box>
-        </Box>
-
-        {/* Ảnh + overlay storytelling */}
-        <Box
-          sx={{
-            position: "relative",
-            width: { xs: "100%", md: 420 },
-            mt:15,
-            height: 560,
-            border: "4px solid rgba(238,183,43,0.3)",
-            borderRadius: 2,
-            boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
-            overflow: "hidden",
-            cursor: "pointer",
-            "&:hover img": {
-              transform: "scale(1.05)",
-            },
-            "&:hover .infoOverlay": {
-              opacity: 1,
-              transform: "translateY(0)",
-            },
-            "&:hover .fadeItem": {
-              opacity: 1,
-              transform: "translateY(0)",
-            },
+        {/* Trung tâm */}
+        <motion.div
+          style={{
+            position: "absolute",
+            top: "40%",
+            left: "0%",
+            zIndex: 3,
           }}
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
         >
-          <Box
-            component="img"
-            src={pctPortrait}
-            alt="Phan Châu Trinh"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "transform 0.4s ease",
-            }}
-          />
-
-          <Box
-            className="infoOverlay"
-            sx={{
-              position: "absolute",
-              inset: 0,
-              background: "rgba(0,0,0,0.65)",
-              color: "#fff",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-              p: 3,
-              opacity: 0,
-              transform: "translateY(20px)",
-              transition: "all 0.4s ease",
-              "& .fadeItem": {
-                opacity: 0,
-                transform: "translateY(15px)",
-                transition: "all 0.6s ease",
-              },
-              "& .fadeItem:nth-of-type(1)": {
-                transitionDelay: "0.1s",
-              },
-              "& .fadeItem:nth-of-type(2)": {
-                transitionDelay: "0.3s",
-              },
-              "& .fadeItem:nth-of-type(3)": {
-                transitionDelay: "0.5s",
-              },
-              "& .fadeItem:nth-of-type(4)": {
-                transitionDelay: "0.7s",
-              },
-            }}
-          >
-            <Typography
-              variant="h6"
-              className="fadeItem"
-              sx={{ color: "#eeb72b", mb: 1 }}
+          <Box sx={{ textAlign: "center" }}>
+            <Box
+              sx={{
+                width: { xs: 180, md: 320 },
+                height: { xs: 180, md: 320 },
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: "4px solid #eeb72b",
+                boxShadow: "0 10px 28px rgba(0,0,0,0.45)",
+                mb: 2,
+                mx: "auto",
+              }}
             >
-              Phan Châu Trinh (1872 – 1926)
+              <Box
+                component="img"
+                src={centerImg}
+                alt="Nội dung chính"
+                sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </Box>
+            <Typography
+              sx={{
+                color: "#eeb72b",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                mb: 1,
+                textAlign: "center",
+              }}
+            >
+              Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam
             </Typography>
-            <Typography variant="body2" className="fadeItem" sx={{ mb: 1 }}>
-              • Chủ trương cải cách xã hội thay vì bạo động.
-            </Typography>
-            <Typography variant="body2" className="fadeItem" sx={{ mb: 1 }}>
-              • Nhà cải cách, khởi xướng tư tưởng dân quyền
-            </Typography>
-            <Typography variant="body2" className="fadeItem" sx={{ mb: 1 }}>
-              • Khẩu hiệu nổi tiếng: “Khai dân trí, chấn dân khí, hậu dân sinh”.
-            </Typography>
-            <Typography variant="body2" className="fadeItem" sx={{ mb: 1 }}>
-              • Tin rằng phải dựa vào Pháp để “canh tân đất nước”.
-            </Typography>
-            <Typography variant="body2" className="fadeItem" sx={{ mb: 1 }}>
-              • Tin vào cải cách hòa bình qua giáo dục & pháp luật
-            </Typography>
-            <Typography variant="body2" className="fadeItem" sx={{ mb: 1 }}>
-              • Hạn chế: đặt niềm tin vào ngoại bang, chưa gắn độc lập với sức mạnh toàn dân.
+            <Typography
+              sx={{
+                mx: "auto",
+                fontSize: 14,
+                color: "rgba(255,255,255,0.9)",
+                textAlign: "center",
+                maxWidth: { xs: 180, md: 420 },
+              }}
+            >
+              Quan niệm – Đặc trưng – Cơ sở pháp lý – Chính trị
             </Typography>
           </Box>
-        </Box>
+        </motion.div>
+
+        {/* Vệ tinh + Text */}
+        {items.map((it, i) => {
+          const size = it.size ?? 130;
+          return (
+            <Box key={it.key}>
+              {/* Ảnh */}
+              <Tooltip
+                arrow
+                placement="bottom"
+                title={
+                  <Box sx={{ whiteSpace: "pre-line", textAlign: "left", maxWidth: 360 }}>
+                    <Typography sx={{ fontWeight: 800, mb: 0.5, color: "#eeb72b" }}>
+                      {it.title}
+                    </Typography>
+                  </Box>
+                }
+              >
+                <motion.div
+                  style={{
+                    position: "absolute",
+                    top: it.top,
+                    left: it.left,
+                    transform: "translate(-50%, -50%)",
+                    cursor: "pointer",
+                    zIndex: 3,
+                  }}
+                  animate={{ x: [0, 6, 0, -6, 0], y: [0, -4, 0, 4, 0] }}
+                  transition={{
+                    duration: 6 + (i % 3),
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    repeatType: "mirror",
+                  }}
+                  whileHover={{ scale: 1.06 }}
+                  onClick={() => setOpenKey(it.key)}
+                >
+                  <Box
+                    sx={{
+                      width: size,
+                      height: size,
+                      borderRadius: "100%",
+                      overflow: "hidden",
+                      border: "3px solid #eeb72b",
+                      boxShadow: "0 10px 22px rgba(0,0,0,0.45)",
+                      background: "rgba(0,0,0,0.25)",
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={it.img}
+                      alt={it.title}
+                      sx={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    />
+                  </Box>
+                </motion.div>
+              </Tooltip>
+
+              {/* Text block bên phải */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: it.top,
+                  right: 0,
+                  transform: "translateY(-50%)",
+                  width: `calc(100% - ${it.left} - ${size + 16}px)`,
+                  textAlign: "left",
+                  pl: -1,
+                  zIndex: 2,
+                  mt: 7,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 800,
+                    color: "#eeb72b",
+                    textTransform: "uppercase",
+                    fontSize: 17,
+                    lineHeight: 1.2,
+                    mb: 1,
+                  }}
+                >
+                  {it.title}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: 15,
+                    color: "rgba(255,255,255,0.9)",
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {it.brief}
+                </Typography>
+              </Box>
+            </Box>
+          );
+        })}
       </Box>
 
       {/* Dialog chi tiết */}
-      <Dialog
-        open={openDetail}
-        onClose={() => setOpenDetail(false)}
-        maxWidth="md"
-        fullWidth
-        PaperProps={{
-          sx: {
-            background: "rgba(20,0,0,0.9)",
-            backdropFilter: "blur(8px)",
-            borderRadius: 3,
-            p: 3,
-            color: "#fff",
-          },
-        }}
-      >
-        <DialogTitle sx={{ fontWeight: 700, color: "#eeb72b" }}>
-          Chủ trương và phong trào cải cách
-        </DialogTitle>
-        <DialogContent
-          sx={{
-            textAlign: "justify",
-            fontSize: { xs: 16, md: 18 },
-            lineHeight: 1.7,
+      {items.map((it) => (
+        <Dialog
+          key={it.key}
+          open={openKey === it.key}
+          onClose={() => setOpenKey(null)}
+          maxWidth="md"
+          fullWidth
+          PaperProps={{
+            sx: {
+              background: "rgba(20,0,0,0.92)",
+              backdropFilter: "blur(8px)",
+              borderRadius: 3,
+              p: 1,
+              color: "#fff",
+            },
           }}
         >
-          <Typography sx={{ mb: 2 }}>
-            Phan Châu Trinh không chủ trương bạo động, mà kêu gọi cải cách xã hội dựa
-            trên <b>“Khai dân trí, chấn dân khí, hậu dân sinh”</b>. Ông tin rằng muốn
-            cứu nước phải nâng cao dân trí, phát huy tinh thần dân tộc và cải thiện
-            đời sống nhân dân.
-          </Typography>
-          <Typography sx={{ mb: 2 }}>
-            Ông cùng Huỳnh Thúc Kháng, Trần Quý Cáp phát động phong trào Duy Tân (1906),
-            vận động mở trường học, phát triển kinh tế, khuyến khích bỏ hủ tục lạc hậu.
-          </Typography>
-          <Typography sx={{ mb: 2 }}>
-            Sau phong trào chống thuế 1908, ông bị bắt và kết án tử hình, nhưng sau
-            được giảm án và đày ra Côn Đảo, rồi sang Pháp. Tại đây, ông tiếp tục diễn
-            thuyết, viết báo, tố cáo chế độ thực dân và kêu gọi cải cách dân quyền.
-          </Typography>
-          <Typography>
-            Năm 1925, ông về nước và có các bài diễn thuyết lớn tại Sài Gòn, khẳng định
-            con đường cải cách hòa bình. Khi ông qua đời (1926), lễ tang trở thành một
-            phong trào chính trị rộng lớn, thể hiện ảnh hưởng sâu rộng của tư tưởng dân
-            quyền.
-          </Typography>
-        </DialogContent>
-      </Dialog>
+          <DialogTitle sx={{ fontWeight: 900, color: "#eeb72b" }}>
+            {it.title}
+          </DialogTitle>
+          <DialogContent sx={{ textAlign: "justify" }}>
+            {it.details.map((p, idx) => (
+              <Typography key={idx} sx={{ mb: 2, lineHeight: 1.7 }}>
+                {p}
+              </Typography>
+            ))}
+            <Box sx={{ textAlign: "right", mt: 1 }}>
+              <Button
+                variant="contained"
+                onClick={() => setOpenKey(null)}
+                sx={{
+                  bgcolor: "#eeb72b",
+                  color: "#831f21",
+                  fontWeight: 700,
+                  borderRadius: "999px",
+                }}
+              >
+                Đóng
+              </Button>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      ))}
     </Box>
   );
 }

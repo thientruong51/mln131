@@ -4,18 +4,18 @@ import { Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./sections/Hero";
+import Hero1 from "./sections/Hero1";
 import PhanBoiChau from "./sections/PhanBoiChau";
 import PhanChauTrinh from "./sections/PhanChauTrinh";
 import HoChiMinh from "./sections/HoChiMinh";
 import Comparison from "./sections/Comparison";
-import Values from "./sections/Values";
 import Quiz from "./sections/Quiz";
-import HoChiMinhInfor from "./sections/HoChiMinhinfor";
 import TransparencyAI from "./sections/TransparencyAI";
 
 function HomePage() {
   // refs
   const homeRef = useRef<HTMLDivElement | null>(null);
+  const heroRef = useRef<HTMLDivElement | null>(null);
   const pbcRef = useRef<HTMLDivElement | null>(null);
   const pctRef = useRef<HTMLDivElement | null>(null);
   const hcmRef = useRef<HTMLDivElement | null>(null);
@@ -28,6 +28,7 @@ function HomePage() {
 
   const sections = [
     { id: "home", ref: homeRef },
+    { id: "hero", ref: heroRef },
     { id: "pbc", ref: pbcRef },
     { id: "pct", ref: pctRef },
     { id: "hcmInfor", ref: hcmInforRef },
@@ -72,13 +73,13 @@ function HomePage() {
         }}
       />
       <Box ref={homeRef} data-section="home"><Hero /></Box>
+      <Box ref={heroRef} data-section="hero"><Hero1 /></Box>
       <Box ref={pbcRef} data-section="pbc"><PhanBoiChau /></Box>
       <Box ref={pctRef} data-section="pct"><PhanChauTrinh /></Box>
-      <Box ref={hcmInforRef} data-section="hcmInfor"><HoChiMinhInfor /></Box>
       <Box ref={hcmRef} data-section="hcm"><HoChiMinh /></Box>
-      <Box ref={comparisonRef} data-section="comparison"><Comparison /></Box>
-      <Box ref={valuesRef} data-section="values"><Values /></Box>
       <Box ref={quizRef} data-section="quiz"><Quiz /></Box>
+      <Box ref={comparisonRef} data-section="comparison"><Comparison /></Box>
+
     </>
   );
 }
